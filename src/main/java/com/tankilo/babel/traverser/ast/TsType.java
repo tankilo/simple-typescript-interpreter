@@ -7,8 +7,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = TSStringKeyword.class, name = "TSStringKeyword")}
-)
+        @JsonSubTypes.Type(value = TSStringKeyword.class, name = "TSStringKeyword"),
+        @JsonSubTypes.Type(value = TSNumberKeyword.class, name = "TSNumberKeyword")}
+
+        )
 public abstract class TsType extends Node {
 
 }

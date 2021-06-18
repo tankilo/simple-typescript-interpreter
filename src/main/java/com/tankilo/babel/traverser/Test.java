@@ -10,7 +10,7 @@ public class Test {
         String json = "{\n" +
                 "  \"type\": \"File\",\n" +
                 "  \"start\": 0,\n" +
-                "  \"end\": 30,\n" +
+                "  \"end\": 24,\n" +
                 "  \"loc\": {\n" +
                 "    \"start\": {\n" +
                 "      \"line\": 1,\n" +
@@ -18,7 +18,7 @@ public class Test {
                 "    },\n" +
                 "    \"end\": {\n" +
                 "      \"line\": 1,\n" +
-                "      \"column\": 30\n" +
+                "      \"column\": 24\n" +
                 "    }\n" +
                 "  },\n" +
                 "  \"errors\": [\n" +
@@ -27,7 +27,7 @@ public class Test {
                 "  \"program\": {\n" +
                 "    \"type\": \"Program\",\n" +
                 "    \"start\": 0,\n" +
-                "    \"end\": 30,\n" +
+                "    \"end\": 24,\n" +
                 "    \"loc\": {\n" +
                 "      \"start\": {\n" +
                 "        \"line\": 1,\n" +
@@ -35,7 +35,7 @@ public class Test {
                 "      },\n" +
                 "      \"end\": {\n" +
                 "        \"line\": 1,\n" +
-                "        \"column\": 30\n" +
+                "        \"column\": 24\n" +
                 "      }\n" +
                 "    },\n" +
                 "    \"sourceType\": \"module\",\n" +
@@ -44,7 +44,7 @@ public class Test {
                 "      {\n" +
                 "        \"type\": \"VariableDeclaration\",\n" +
                 "        \"start\": 0,\n" +
-                "        \"end\": 30,\n" +
+                "        \"end\": 24,\n" +
                 "        \"loc\": {\n" +
                 "          \"start\": {\n" +
                 "            \"line\": 1,\n" +
@@ -52,14 +52,14 @@ public class Test {
                 "          },\n" +
                 "          \"end\": {\n" +
                 "            \"line\": 1,\n" +
-                "            \"column\": 30\n" +
+                "            \"column\": 24\n" +
                 "          }\n" +
                 "        },\n" +
                 "        \"declarations\": [\n" +
                 "          {\n" +
                 "            \"type\": \"VariableDeclarator\",\n" +
                 "            \"start\": 4,\n" +
-                "            \"end\": 29,\n" +
+                "            \"end\": 23,\n" +
                 "            \"loc\": {\n" +
                 "              \"start\": {\n" +
                 "                \"line\": 1,\n" +
@@ -67,7 +67,7 @@ public class Test {
                 "              },\n" +
                 "              \"end\": {\n" +
                 "                \"line\": 1,\n" +
-                "                \"column\": 29\n" +
+                "                \"column\": 23\n" +
                 "              }\n" +
                 "            },\n" +
                 "            \"id\": {\n" +
@@ -101,7 +101,7 @@ public class Test {
                 "                  }\n" +
                 "                },\n" +
                 "                \"typeAnnotation\": {\n" +
-                "                  \"type\": \"TSStringKeyword\",\n" +
+                "                  \"type\": \"TSNumberKeyword\",\n" +
                 "                  \"start\": 11,\n" +
                 "                  \"end\": 17,\n" +
                 "                  \"loc\": {\n" +
@@ -118,9 +118,9 @@ public class Test {
                 "              }\n" +
                 "            },\n" +
                 "            \"init\": {\n" +
-                "              \"type\": \"StringLiteral\",\n" +
+                "              \"type\": \"BinaryExpression\",\n" +
                 "              \"start\": 20,\n" +
-                "              \"end\": 29,\n" +
+                "              \"end\": 23,\n" +
                 "              \"loc\": {\n" +
                 "                \"start\": {\n" +
                 "                  \"line\": 1,\n" +
@@ -128,14 +128,50 @@ public class Test {
                 "                },\n" +
                 "                \"end\": {\n" +
                 "                  \"line\": 1,\n" +
-                "                  \"column\": 29\n" +
+                "                  \"column\": 23\n" +
                 "                }\n" +
                 "              },\n" +
-                "              \"extra\": {\n" +
-                "                \"rawValue\": \"enabled\",\n" +
-                "                \"raw\": \"\\\"enabled\\\"\"\n" +
+                "              \"left\": {\n" +
+                "                \"type\": \"NumericLiteral\",\n" +
+                "                \"start\": 20,\n" +
+                "                \"end\": 21,\n" +
+                "                \"loc\": {\n" +
+                "                  \"start\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 20\n" +
+                "                  },\n" +
+                "                  \"end\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 21\n" +
+                "                  }\n" +
+                "                },\n" +
+                "                \"extra\": {\n" +
+                "                  \"rawValue\": 3,\n" +
+                "                  \"raw\": \"3\"\n" +
+                "                },\n" +
+                "                \"value\": 3\n" +
                 "              },\n" +
-                "              \"value\": \"enabled\"\n" +
+                "              \"operator\": \"+\",\n" +
+                "              \"right\": {\n" +
+                "                \"type\": \"NumericLiteral\",\n" +
+                "                \"start\": 22,\n" +
+                "                \"end\": 23,\n" +
+                "                \"loc\": {\n" +
+                "                  \"start\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 22\n" +
+                "                  },\n" +
+                "                  \"end\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 23\n" +
+                "                  }\n" +
+                "                },\n" +
+                "                \"extra\": {\n" +
+                "                  \"rawValue\": 1,\n" +
+                "                  \"raw\": \"1\"\n" +
+                "                },\n" +
+                "                \"value\": 1\n" +
+                "              }\n" +
                 "            }\n" +
                 "          }\n" +
                 "        ],\n" +
