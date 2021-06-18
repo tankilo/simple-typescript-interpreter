@@ -6,9 +6,9 @@ import java.util.Map;
 public class ContextScope {
     private ContextScope parent;
 
-    private Map<String, Object> variables = new HashMap<>();
+    private Map<String, TypedValue> variables = new HashMap<>();
 
-    public Map<String, Object> getVariables() {
+    public Map<String, TypedValue> getVariables() {
         return variables;
     }
 

@@ -1,15 +1,18 @@
 package com.tankilo.babel.traverser.traverse;
 
-import com.tankilo.babel.traverser.ast.VariableDeclaration;
-import com.tankilo.babel.traverser.ast.VariableDeclarator;
+import com.tankilo.babel.traverser.ast.*;
 
 public interface BabelAstVisitor {
 
-    void visit(VariableDeclaration variableDeclaration, ContextScope context);
+    TypedValue visit(VariableDeclaration variableDeclaration, ContextScope context);
 
-    void endVisit(VariableDeclaration variableDeclaration, ContextScope context);
+    TypedValue visit(VariableDeclarator variableDeclarator, ContextScope context);
 
-    void visit(VariableDeclarator variableDeclarator, ContextScope context);
+    TypedValue visit(Expression expression, ContextScope context);
 
-    void endVisit(VariableDeclarator variableDeclarator, ContextScope context);
+    TypedValue visit(StringLiteral expression, ContextScope context);
+
+    TypedValue visit(NumericLiteral expression, ContextScope context);
+
+    TypedValue visit(BinaryExpression expression, ContextScope context);
 }
