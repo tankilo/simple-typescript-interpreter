@@ -87,7 +87,7 @@ public class Test {
                 "              },\n" +
                 "              \"name\": \"state\",\n" +
                 "              \"typeAnnotation\": {\n" +
-                "                \"type\": \"TypeAnnotation\",\n" +
+                "                \"type\": \"TSTypeAnnotation\",\n" +
                 "                \"start\": 9,\n" +
                 "                \"end\": 17,\n" +
                 "                \"loc\": {\n" +
@@ -101,7 +101,7 @@ public class Test {
                 "                  }\n" +
                 "                },\n" +
                 "                \"typeAnnotation\": {\n" +
-                "                  \"type\": \"StringTypeAnnotation\",\n" +
+                "                  \"type\": \"TSStringKeyword\",\n" +
                 "                  \"start\": 11,\n" +
                 "                  \"end\": 17,\n" +
                 "                  \"loc\": {\n" +
