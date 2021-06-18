@@ -4,13 +4,15 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.tankilo.babel.traverser.ast.File;
+import com.tankilo.babel.traverser.traverse.BabelAstVisitorImpl;
+import com.tankilo.babel.traverser.traverse.ContextScope;
 
 public class Test {
     public static void main(String[] args) throws JsonProcessingException {
         String json = "{\n" +
                 "  \"type\": \"File\",\n" +
                 "  \"start\": 0,\n" +
-                "  \"end\": 24,\n" +
+                "  \"end\": 26,\n" +
                 "  \"loc\": {\n" +
                 "    \"start\": {\n" +
                 "      \"line\": 1,\n" +
@@ -18,16 +20,14 @@ public class Test {
                 "    },\n" +
                 "    \"end\": {\n" +
                 "      \"line\": 1,\n" +
-                "      \"column\": 24\n" +
+                "      \"column\": 26\n" +
                 "    }\n" +
                 "  },\n" +
-                "  \"errors\": [\n" +
-                "    \n" +
-                "  ],\n" +
+                "  \"errors\": [],\n" +
                 "  \"program\": {\n" +
                 "    \"type\": \"Program\",\n" +
                 "    \"start\": 0,\n" +
-                "    \"end\": 24,\n" +
+                "    \"end\": 26,\n" +
                 "    \"loc\": {\n" +
                 "      \"start\": {\n" +
                 "        \"line\": 1,\n" +
@@ -35,7 +35,7 @@ public class Test {
                 "      },\n" +
                 "      \"end\": {\n" +
                 "        \"line\": 1,\n" +
-                "        \"column\": 24\n" +
+                "        \"column\": 26\n" +
                 "      }\n" +
                 "    },\n" +
                 "    \"sourceType\": \"module\",\n" +
@@ -44,7 +44,7 @@ public class Test {
                 "      {\n" +
                 "        \"type\": \"VariableDeclaration\",\n" +
                 "        \"start\": 0,\n" +
-                "        \"end\": 24,\n" +
+                "        \"end\": 26,\n" +
                 "        \"loc\": {\n" +
                 "          \"start\": {\n" +
                 "            \"line\": 1,\n" +
@@ -52,14 +52,14 @@ public class Test {
                 "          },\n" +
                 "          \"end\": {\n" +
                 "            \"line\": 1,\n" +
-                "            \"column\": 24\n" +
+                "            \"column\": 26\n" +
                 "          }\n" +
                 "        },\n" +
                 "        \"declarations\": [\n" +
                 "          {\n" +
                 "            \"type\": \"VariableDeclarator\",\n" +
                 "            \"start\": 4,\n" +
-                "            \"end\": 23,\n" +
+                "            \"end\": 25,\n" +
                 "            \"loc\": {\n" +
                 "              \"start\": {\n" +
                 "                \"line\": 1,\n" +
@@ -67,7 +67,7 @@ public class Test {
                 "              },\n" +
                 "              \"end\": {\n" +
                 "                \"line\": 1,\n" +
-                "                \"column\": 23\n" +
+                "                \"column\": 25\n" +
                 "              }\n" +
                 "            },\n" +
                 "            \"id\": {\n" +
@@ -120,7 +120,7 @@ public class Test {
                 "            \"init\": {\n" +
                 "              \"type\": \"BinaryExpression\",\n" +
                 "              \"start\": 20,\n" +
-                "              \"end\": 23,\n" +
+                "              \"end\": 25,\n" +
                 "              \"loc\": {\n" +
                 "                \"start\": {\n" +
                 "                  \"line\": 1,\n" +
@@ -128,13 +128,13 @@ public class Test {
                 "                },\n" +
                 "                \"end\": {\n" +
                 "                  \"line\": 1,\n" +
-                "                  \"column\": 23\n" +
+                "                  \"column\": 25\n" +
                 "                }\n" +
                 "              },\n" +
                 "              \"left\": {\n" +
-                "                \"type\": \"NumericLiteral\",\n" +
+                "                \"type\": \"BinaryExpression\",\n" +
                 "                \"start\": 20,\n" +
-                "                \"end\": 21,\n" +
+                "                \"end\": 23,\n" +
                 "                \"loc\": {\n" +
                 "                  \"start\": {\n" +
                 "                    \"line\": 1,\n" +
@@ -142,7 +142,64 @@ public class Test {
                 "                  },\n" +
                 "                  \"end\": {\n" +
                 "                    \"line\": 1,\n" +
-                "                    \"column\": 21\n" +
+                "                    \"column\": 23\n" +
+                "                  }\n" +
+                "                },\n" +
+                "                \"left\": {\n" +
+                "                  \"type\": \"NumericLiteral\",\n" +
+                "                  \"start\": 20,\n" +
+                "                  \"end\": 21,\n" +
+                "                  \"loc\": {\n" +
+                "                    \"start\": {\n" +
+                "                      \"line\": 1,\n" +
+                "                      \"column\": 20\n" +
+                "                    },\n" +
+                "                    \"end\": {\n" +
+                "                      \"line\": 1,\n" +
+                "                      \"column\": 21\n" +
+                "                    }\n" +
+                "                  },\n" +
+                "                  \"extra\": {\n" +
+                "                    \"rawValue\": 2,\n" +
+                "                    \"raw\": \"2\"\n" +
+                "                  },\n" +
+                "                  \"value\": 2\n" +
+                "                },\n" +
+                "                \"operator\": \"*\",\n" +
+                "                \"right\": {\n" +
+                "                  \"type\": \"NumericLiteral\",\n" +
+                "                  \"start\": 22,\n" +
+                "                  \"end\": 23,\n" +
+                "                  \"loc\": {\n" +
+                "                    \"start\": {\n" +
+                "                      \"line\": 1,\n" +
+                "                      \"column\": 22\n" +
+                "                    },\n" +
+                "                    \"end\": {\n" +
+                "                      \"line\": 1,\n" +
+                "                      \"column\": 23\n" +
+                "                    }\n" +
+                "                  },\n" +
+                "                  \"extra\": {\n" +
+                "                    \"rawValue\": 2,\n" +
+                "                    \"raw\": \"2\"\n" +
+                "                  },\n" +
+                "                  \"value\": 2\n" +
+                "                }\n" +
+                "              },\n" +
+                "              \"operator\": \"+\",\n" +
+                "              \"right\": {\n" +
+                "                \"type\": \"NumericLiteral\",\n" +
+                "                \"start\": 24,\n" +
+                "                \"end\": 25,\n" +
+                "                \"loc\": {\n" +
+                "                  \"start\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 24\n" +
+                "                  },\n" +
+                "                  \"end\": {\n" +
+                "                    \"line\": 1,\n" +
+                "                    \"column\": 25\n" +
                 "                  }\n" +
                 "                },\n" +
                 "                \"extra\": {\n" +
@@ -150,27 +207,6 @@ public class Test {
                 "                  \"raw\": \"3\"\n" +
                 "                },\n" +
                 "                \"value\": 3\n" +
-                "              },\n" +
-                "              \"operator\": \"+\",\n" +
-                "              \"right\": {\n" +
-                "                \"type\": \"NumericLiteral\",\n" +
-                "                \"start\": 22,\n" +
-                "                \"end\": 23,\n" +
-                "                \"loc\": {\n" +
-                "                  \"start\": {\n" +
-                "                    \"line\": 1,\n" +
-                "                    \"column\": 22\n" +
-                "                  },\n" +
-                "                  \"end\": {\n" +
-                "                    \"line\": 1,\n" +
-                "                    \"column\": 23\n" +
-                "                  }\n" +
-                "                },\n" +
-                "                \"extra\": {\n" +
-                "                  \"rawValue\": 1,\n" +
-                "                  \"raw\": \"1\"\n" +
-                "                },\n" +
-                "                \"value\": 1\n" +
                 "              }\n" +
                 "            }\n" +
                 "          }\n" +
@@ -178,18 +214,17 @@ public class Test {
                 "        \"kind\": \"let\"\n" +
                 "      }\n" +
                 "    ],\n" +
-                "    \"directives\": [\n" +
-                "      \n" +
-                "    ]\n" +
+                "    \"directives\": []\n" +
                 "  },\n" +
-                "  \"comments\": [\n" +
-                "    \n" +
-                "  ]\n" +
+                "  \"comments\": []\n" +
                 "}";
 
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         File file = objectMapper.readValue(json, File.class);
+        BabelAstVisitorImpl babelAstVisitor = new BabelAstVisitorImpl();
+        ContextScope contextScope = new ContextScope();
+        babelAstVisitor.visit(file.getProgram(), contextScope);
         System.out.println();
     }
 }

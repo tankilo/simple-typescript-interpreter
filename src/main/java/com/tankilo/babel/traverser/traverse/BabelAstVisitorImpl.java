@@ -6,6 +6,21 @@ import java.util.List;
 
 public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
+    public TypedValue visit(Program program, ContextScope context) {
+        List<Statement> statements = program.getBody();
+        statements.forEach(s -> visit(s, context));
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(Statement statement, ContextScope context) {
+        if (statement instanceof VariableDeclaration) {
+            visit((VariableDeclaration) statement, context);
+        }
+        return null;
+    }
+
+    @Override
     public TypedValue visit(VariableDeclaration variableDeclaration, ContextScope context) {
         List<VariableDeclarator> declarations = variableDeclaration.getDeclarations();
         declarations.forEach(s -> visit(s, context));
@@ -22,12 +37,19 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             TypeAnnotationBase typeAnnotationBase = pattern.getTypeAnnotation();
             if (typeAnnotationBase instanceof TSTypeAnnotation) {
                 TSTypeAnnotation tsTypeAnnotation = (TSTypeAnnotation) pattern.getTypeAnnotation();
-                TsType tsType = tsTypeAnnotation.getTypeAnnotation();
-                if (tsType instanceof TSStringKeyword) {
-                    Expression expression = variableDeclarator.getInit();
-                    TypedValue initValue = visit(expression,context);
-                    context.getVariables().put(variableName, initValue);
-                }
+                Expression expression = variableDeclarator.getInit();
+                TypedValue initValue = visit(expression, context);
+                context.getVariables().put(variableName, initValue);
+//                TsType tsType = tsTypeAnnotation.getTypeAnnotation();
+//                if (tsType instanceof TSStringKeyword) {
+//                    Expression expression = variableDeclarator.getInit();
+//                    TypedValue initValue = visit(expression, context);
+//                    context.getVariables().put(variableName, initValue);
+//                } else if (tsType instanceof TSNumberKeyword) {
+//                    Expression expression = variableDeclarator.getInit();
+//                    TypedValue initValue = visit(expression, context);
+//                    context.getVariables().put(variableName, initValue);
+//                }
             }
         }
         return null;
@@ -35,6 +57,13 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
     @Override
     public TypedValue visit(Expression expression, ContextScope context) {
+        if (expression instanceof StringLiteral) {
+            return visit((StringLiteral) expression, context);
+        } else if (expression instanceof NumericLiteral) {
+            return visit((NumericLiteral) expression, context);
+        } else if (expression instanceof BinaryExpression) {
+            return visit((BinaryExpression) expression, context);
+        }
         return null;
     }
 

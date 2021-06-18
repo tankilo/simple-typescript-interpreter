@@ -6,6 +6,13 @@ import java.util.Map;
 public class ContextScope {
     private ContextScope parent;
 
+    public ContextScope() {
+    }
+
+    public ContextScope(ContextScope parent) {
+        this.parent = parent;
+    }
+
     private Map<String, TypedValue> variables = new HashMap<>();
 
     public Map<String, TypedValue> getVariables() {
