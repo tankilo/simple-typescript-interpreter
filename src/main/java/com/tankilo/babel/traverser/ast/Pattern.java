@@ -9,14 +9,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Identifier.class, name = "Identifier")}
 )
-public abstract class Pattern extends Node {
-    private TypeAnnotationBase typeAnnotation;
-
-    public TypeAnnotationBase getTypeAnnotation() {
-        return typeAnnotation;
-    }
-
-    public void setTypeAnnotation(TypeAnnotationBase typeAnnotation) {
-        this.typeAnnotation = typeAnnotation;
-    }
+public interface Pattern {
+    TypeAnnotationBase getTypeAnnotation();
+    void setTypeAnnotation(TypeAnnotationBase typeAnnotation);
 }
