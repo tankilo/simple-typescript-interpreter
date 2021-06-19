@@ -19,6 +19,10 @@ public class TypedValue {
     }
 
     public TypedValue plus(TypedValue other) {
+
+        if (value instanceof String || other.getValue() instanceof String) {
+            return new TypedValue(value + "" + other.getValue(), Integer.class);
+        }
         if (value instanceof Integer && other.getValue() instanceof Integer) {
             return new TypedValue((Integer) value + (Integer) other.getValue(), Integer.class);
         } else if (value instanceof Double && other.getValue() instanceof Double) {
