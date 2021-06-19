@@ -57,6 +57,7 @@ public class BabelParserTest {
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
         String code = "let state: number = 2/4;";
+        System.out.println(code);
         v.parse(code);
     }
 }

@@ -59,7 +59,7 @@ public class TypedValue {
 
     public TypedValue div(TypedValue other) {
         if (value instanceof Integer && other.getValue() instanceof Integer) {
-            return new TypedValue((Integer) value / (Integer) other.getValue(), Integer.class);
+            return new TypedValue((Integer) value * 1.0 / (Integer) other.getValue(), Double.class);
         } else if (value instanceof Double && other.getValue() instanceof Double) {
             return new TypedValue((Double) value / (Double) other.getValue(), Double.class);
         } else if (value instanceof Integer && other.getValue() instanceof Double) {
