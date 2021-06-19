@@ -9,8 +9,10 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Identifier.class, name = "Identifier"),
         @JsonSubTypes.Type(value = StringLiteral.class, name = "StringLiteral"),
+        @JsonSubTypes.Type(value = CallExpression.class, name = "CallExpression"),
         @JsonSubTypes.Type(value = NumericLiteral.class, name = "NumericLiteral"),
         @JsonSubTypes.Type(value = BooleanLiteral.class, name = "BooleanLiteral"),
+        @JsonSubTypes.Type(value = MemberExpression.class, name = "MemberExpression"),
         @JsonSubTypes.Type(value = BinaryExpression.class, name = "BinaryExpression")
 })
 public abstract class Expression extends Node {

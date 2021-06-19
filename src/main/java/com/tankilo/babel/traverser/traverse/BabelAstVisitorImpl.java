@@ -3,6 +3,7 @@ package com.tankilo.babel.traverser.traverse;
 import com.tankilo.babel.traverser.ast.*;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
@@ -16,8 +17,15 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     public TypedValue visit(Statement statement, ContextScope context) {
         if (statement instanceof VariableDeclaration) {
             visit((VariableDeclaration) statement, context);
+        } else if (statement instanceof ExpressionStatement) {
+            visit((ExpressionStatement) statement, context);
         }
         return null;
+    }
+
+    @Override
+    public TypedValue visit(ExpressionStatement expressionStatement, ContextScope context) {
+        return visit(expressionStatement.getExpression(), context);
     }
 
     @Override
@@ -27,6 +35,33 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         return null;
     }
 
+    @Override
+    public TypedValue visit(CallExpression callExpression, ContextScope context) {
+        Expression callee = callExpression.getCallee();
+        List<Expression> arguments = callExpression.getArguments();
+        List<TypedValue> valueList = arguments.stream().map(s -> visit(s, context)).collect(Collectors.toList());
+        if (callee instanceof MemberExpression) {
+            MemberExpression memberExpression = (MemberExpression) callee;
+            Expression object = memberExpression.getObject();
+            Expression property = memberExpression.getProperty();
+
+            if (object instanceof Identifier) {
+                Identifier object1 = (Identifier) object;
+                if (object1.getName().equals("console")) {
+                    if (property instanceof Identifier) {
+                        Identifier methodName = (Identifier) property;
+                        if (methodName.getName().equals("log")) {
+                            valueList.forEach(s -> System.out.print(s + " "));
+                            System.out.println();
+                        }
+                    }
+                }
+            }
+
+        }
+
+        return null;
+    }
 
     @Override
     public TypedValue visit(VariableDeclarator variableDeclarator, ContextScope context) {
@@ -65,6 +100,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((BinaryExpression) expression, context);
         } else if (expression instanceof BooleanLiteral) {
             return visit((BooleanLiteral) expression, context);
+        } else if (expression instanceof CallExpression) {
+            return visit((CallExpression) expression, context);
         }
         return null;
     }

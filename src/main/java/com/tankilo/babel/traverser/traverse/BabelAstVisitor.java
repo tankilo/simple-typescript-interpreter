@@ -6,7 +6,12 @@ public interface BabelAstVisitor {
     TypedValue visit(Program program, ContextScope context);
 
     TypedValue visit(Statement statement, ContextScope context);
+
+    TypedValue visit(ExpressionStatement variableDeclaration, ContextScope context);
+
     TypedValue visit(VariableDeclaration variableDeclaration, ContextScope context);
+
+    TypedValue visit(CallExpression callExpression, ContextScope context);
 
     TypedValue visit(VariableDeclarator variableDeclarator, ContextScope context);
 

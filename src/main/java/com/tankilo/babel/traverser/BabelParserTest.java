@@ -48,7 +48,7 @@ public class BabelParserTest {
             System.out.println("All functions available from Java (as loaded into Bindings) "
                     + c.getBindings("js").getMemberKeys());
 
-            System.out.println(contextScope.getVariables().get("state").getValue());
+//            System.out.println(contextScope.getVariables().get("state").getValue());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -56,7 +56,7 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let state: boolean = false;";
+        String code = "console.log(1,2,3);";
         System.out.println(code);
         v.parse(code);
     }

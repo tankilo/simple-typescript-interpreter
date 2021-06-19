@@ -69,4 +69,9 @@ public class TypedValue {
         }
         throw new BabelVisitException("this should never happen");
     }
+
+    @Override
+    public String toString() {
+        return String.valueOf(value);
+    }
 }
