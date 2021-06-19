@@ -63,6 +63,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((NumericLiteral) expression, context);
         } else if (expression instanceof BinaryExpression) {
             return visit((BinaryExpression) expression, context);
+        } else if (expression instanceof BooleanLiteral) {
+            return visit((BooleanLiteral) expression, context);
         }
         return null;
     }
@@ -70,6 +72,11 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
     public TypedValue visit(StringLiteral expression, ContextScope context) {
         return new TypedValue(expression.getValue(), String.class);
+    }
+
+    @Override
+    public TypedValue visit(BooleanLiteral expression, ContextScope context) {
+        return new TypedValue(expression.getValue(), Boolean.class);
     }
 
     @Override

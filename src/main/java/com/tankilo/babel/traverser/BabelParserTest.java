@@ -37,7 +37,7 @@ public class BabelParserTest {
             Value parseFunc = c.getBindings("js").getMember("parse");
             Value value = parseFunc.execute(code, options);
 
-            Value jsonFunc = c.eval("js", "x =>JSON.stringify(x)");
+            Value jsonFunc = c.eval("js", "x => JSON.stringify(x)");
             String json = jsonFunc.execute(value).asString();
             ObjectMapper objectMapper = new ObjectMapper();
             objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
@@ -56,7 +56,7 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let state: number = 2/4;";
+        String code = "let state: boolean = false;";
         System.out.println(code);
         v.parse(code);
     }

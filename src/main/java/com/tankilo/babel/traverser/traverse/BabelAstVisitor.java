@@ -14,6 +14,8 @@ public interface BabelAstVisitor {
 
     TypedValue visit(StringLiteral expression, ContextScope context);
 
+    TypedValue visit(BooleanLiteral expression, ContextScope context);
+
     TypedValue visit(NumericLiteral expression, ContextScope context);
 
     TypedValue visit(BinaryExpression expression, ContextScope context);

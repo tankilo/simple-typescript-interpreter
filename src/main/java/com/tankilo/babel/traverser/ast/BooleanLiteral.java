@@ -1,13 +1,13 @@
 package com.tankilo.babel.traverser.ast;
 
 public class BooleanLiteral extends Literal {
-    private Boolean value;
+    private boolean value;
 
-    public Boolean getValue() {
+    public boolean getValue() {
         return value;
     }
 
-    public void setValue(Boolean value) {
+    public void setValue(boolean value) {
         this.value = value;
     }
 }
