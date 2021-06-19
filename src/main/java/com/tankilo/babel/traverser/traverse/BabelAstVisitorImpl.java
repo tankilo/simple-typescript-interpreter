@@ -69,12 +69,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         if (pattern instanceof Identifier) {
             Identifier identifier = (Identifier) pattern;
             String variableName = identifier.getName();
-            TypeAnnotationBase typeAnnotationBase = pattern.getTypeAnnotation();
-            if (typeAnnotationBase instanceof TSTypeAnnotation) {
-                TSTypeAnnotation tsTypeAnnotation = (TSTypeAnnotation) pattern.getTypeAnnotation();
-                Expression expression = variableDeclarator.getInit();
-                TypedValue initValue = visit(expression, context);
-                context.getVariables().put(variableName, initValue);
+            Expression expression = variableDeclarator.getInit();
+            TypedValue initValue = visit(expression, context);
+            context.getVariables().put(variableName, initValue);
 //                TsType tsType = tsTypeAnnotation.getTypeAnnotation();
 //                if (tsType instanceof TSStringKeyword) {
 //                    Expression expression = variableDeclarator.getInit();
@@ -85,7 +82,6 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 //                    TypedValue initValue = visit(expression, context);
 //                    context.getVariables().put(variableName, initValue);
 //                }
-            }
         }
         return null;
     }
@@ -102,6 +98,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((BooleanLiteral) expression, context);
         } else if (expression instanceof CallExpression) {
             return visit((CallExpression) expression, context);
+        } else if (expression instanceof Identifier) {
+            return visit((Identifier) expression, context);
         }
         return null;
     }
@@ -109,6 +107,11 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
     public TypedValue visit(StringLiteral expression, ContextScope context) {
         return new TypedValue(expression.getValue(), String.class);
+    }
+
+    @Override
+    public TypedValue visit(Identifier identifier, ContextScope context) {
+        return context.getVariables().get(identifier.getName());
     }
 
     @Override

@@ -45,8 +45,8 @@ public class BabelParserTest {
             BabelAstVisitorImpl babelAstVisitor = new BabelAstVisitorImpl();
             ContextScope contextScope = new ContextScope();
             babelAstVisitor.visit(file.getProgram(), contextScope);
-            System.out.println("All functions available from Java (as loaded into Bindings) "
-                    + c.getBindings("js").getMemberKeys());
+//            System.out.println("All functions available from Java (as loaded into Bindings) "
+//                    + c.getBindings("js").getMemberKeys());
 
 //            System.out.println(contextScope.getVariables().get("state").getValue());
         } catch (IOException e) {
@@ -56,8 +56,11 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "console.log(1,2,3);";
+        String code = "var myObj = 1;\n" +
+                "console.log(myObj);";
+        System.out.println("====================Input=====================");
         System.out.println(code);
+        System.out.println("====================Output=====================");
         v.parse(code);
     }
 }
