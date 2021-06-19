@@ -99,7 +99,6 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 return left.div(right);
 
         }
-
         return null;
     }
 }
