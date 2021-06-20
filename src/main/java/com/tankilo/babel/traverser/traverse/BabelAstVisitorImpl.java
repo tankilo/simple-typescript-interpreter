@@ -3,6 +3,7 @@ package com.tankilo.babel.traverser.traverse;
 import com.tankilo.babel.traverser.ast.*;
 
 import java.util.List;
+import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
 public class BabelAstVisitorImpl implements BabelAstVisitor {
@@ -73,19 +74,20 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         if (pattern instanceof Identifier) {
             Identifier identifier = (Identifier) pattern;
             String variableName = identifier.getName();
-            Expression expression = variableDeclarator.getInit();
-            TypedValue initValue = visit(expression, context);
+            TypedValue initValue = visit(variableDeclarator.getInit(), context);
             context.getVariables().put(variableName, initValue);
-//                TsType tsType = tsTypeAnnotation.getTypeAnnotation();
-//                if (tsType instanceof TSStringKeyword) {
-//                    Expression expression = variableDeclarator.getInit();
-//                    TypedValue initValue = visit(expression, context);
-//                    context.getVariables().put(variableName, initValue);
-//                } else if (tsType instanceof TSNumberKeyword) {
-//                    Expression expression = variableDeclarator.getInit();
-//                    TypedValue initValue = visit(expression, context);
-//                    context.getVariables().put(variableName, initValue);
-//                }
+        } else if (pattern instanceof ArrayPattern) {
+            ArrayPattern arrayPattern = (ArrayPattern) pattern;
+            List<Pattern> elements = arrayPattern.getElements();
+            TypedValue initValue = visit(variableDeclarator.getInit(), context);
+            if (initValue.getType() == List.class) {
+                List<TypedValue> initList = (List<TypedValue>) initValue.getValue();
+                for (int i = 0; i < elements.size(); i++) {
+                    Identifier identifier = (Identifier) elements.get(i);
+                    String variableName = identifier.getName();
+                    context.getVariables().put(variableName, initList.get(i));
+                }
+            }
         }
         return null;
     }
@@ -121,7 +123,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 TypedValue typedValue = context.getVariables().get(((Identifier) object).getName());
                 if (typedValue.getType() == List.class) {
                     List list = (List) typedValue.getValue();
-                    if(property instanceof NumericLiteral) {
+                    if (property instanceof NumericLiteral) {
                         NumericLiteral numericLiteral = (NumericLiteral) property;
                         int index = Integer.parseInt(numericLiteral.getValue());
                         return (TypedValue) list.get(index);

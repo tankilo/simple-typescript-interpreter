@@ -56,8 +56,7 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let fibonacci: number[] = [1, 2, 3, 4, 5];\n" +
-                "console.log(fibonacci[1] / 0.5);";
+        String code = "let [a, b, c] = [1, 2, 3]; console.log(a);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");
