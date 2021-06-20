@@ -25,33 +25,14 @@ public class TypedValue {
     }
 
     public TypedValue plus(TypedValue other) {
-
         if (value instanceof String || other.getValue() instanceof String) {
             return new TypedValue(value + "" + other.getValue(), Integer.class);
         }
-        if (value instanceof Integer && other.getValue() instanceof Integer) {
-            return new TypedValue((Integer) value + (Integer) other.getValue(), Integer.class);
-        } else if (value instanceof Double && other.getValue() instanceof Double) {
-            return new TypedValue((Double) value + (Double) other.getValue(), Double.class);
-        } else if (value instanceof Integer && other.getValue() instanceof Double) {
-            return new TypedValue((Integer) value + (Double) other.getValue(), Double.class);
-        } else if (value instanceof Double && other.getValue() instanceof Integer) {
-            return new TypedValue((Double) value + (Integer) other.getValue(), Double.class);
-        }
-        throw new BabelVisitException("this should never happen");
+        return new TypedValue((Double) value + (Double) other.getValue(), Double.class);
     }
 
     public TypedValue minus(TypedValue other) {
-        if (value instanceof Integer && other.getValue() instanceof Integer) {
-            return new TypedValue((Integer) value - (Integer) other.getValue(), Integer.class);
-        } else if (value instanceof Double && other.getValue() instanceof Double) {
-            return new TypedValue((Double) value - (Double) other.getValue(), Double.class);
-        } else if (value instanceof Integer && other.getValue() instanceof Double) {
-            return new TypedValue((Integer) value - (Double) other.getValue(), Double.class);
-        } else if (value instanceof Double && other.getValue() instanceof Integer) {
-            return new TypedValue((Double) value - (Integer) other.getValue(), Double.class);
-        }
-        throw new BabelVisitException("this should never happen");
+        return new TypedValue((Double) value - (Double) other.getValue(), Double.class);
     }
 
     public TypedValue times(TypedValue other) {

@@ -157,11 +157,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
     public TypedValue visit(NumericLiteral expression, ContextScope context) {
         String value = expression.getValue();
-        if (value.contains(".")) {
-            return new TypedValue(Double.valueOf(value), Double.class);
-        } else {
-            return new TypedValue(Integer.valueOf(value), Integer.class);
-        }
+        return new TypedValue(Double.valueOf(value), Double.class);
     }
 
     @Override
