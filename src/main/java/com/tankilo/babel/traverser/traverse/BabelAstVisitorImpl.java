@@ -2,7 +2,9 @@ package com.tankilo.babel.traverser.traverse;
 
 import com.tankilo.babel.traverser.ast.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.function.Consumer;
 import java.util.stream.Collectors;
 
@@ -140,6 +142,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((MemberExpression) expression, context);
         } else if (expression instanceof AssignmentExpression) {
             return visit((AssignmentExpression) expression, context);
+        } else if (expression instanceof ObjectExpression) {
+            return visit((ObjectExpression) expression, context);
         }
         return null;
     }
@@ -166,6 +170,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     public TypedValue visit(MemberExpression expression, ContextScope context) {
         Expression object = expression.getObject();
         Expression property = expression.getProperty();
+        // A member expression. If computed is true, the node corresponds to a computed (a[b]) member expression and property is an Expression.
+        // If computed is false, the node corresponds to a static (a.b) member expression and property is an Identifier or a PrivateName.
         if (expression.isComputed()) {
             if (object instanceof Identifier) {
                 TypedValue typedValue = context.getVariable(((Identifier) object).getName());
@@ -177,9 +183,58 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                         return (TypedValue) list.get(index);
                     }
                 }
+                if (typedValue.getType() == Map.class) {
+                    Map map = (Map) typedValue.getValue();
+                    String propertyName = "";
+                    if (property instanceof StringLiteral) {
+                        propertyName = ((StringLiteral) property).getValue();
+                    } else if (property instanceof Identifier) {
+                        propertyName = ((Identifier) property).getName();
+                    }
+                    Object result = map.get(propertyName);
+                    if (result instanceof TypedValue) {
+                        return (TypedValue) result;
+                    }
+                }
             }
         }
+        else {
+            if (object instanceof Identifier) {
+                TypedValue typedValue = context.getVariable(((Identifier) object).getName());
+                if (typedValue.getType() == Map.class) {
+                    Map map = (Map) typedValue.getValue();
+                    String propertyName = "";
+                    if (property instanceof StringLiteral) {
+                        propertyName = ((StringLiteral) property).getValue();
+                    } else if (property instanceof Identifier) {
+                        propertyName = ((Identifier) property).getName();
+                    }
+                    Object result = map.get(propertyName);
+                    if (result instanceof TypedValue) {
+                        return (TypedValue) result;
+                    }
+                }
+            }
+        }
+
         return null;
+    }
+
+    @Override
+    public TypedValue visit(ObjectExpression expression, ContextScope context) {
+        List<ObjectMemberBase> properties = expression.getProperties();
+        Map<String, TypedValue> map = new HashMap<>();
+        for (ObjectMemberBase property : properties) {
+            if (property instanceof ObjectProperty) {
+                ObjectProperty objectProperty = (ObjectProperty) property;
+                if (objectProperty.getKey() instanceof Identifier) {
+                    Identifier identifier = (Identifier) objectProperty.getKey();
+                    TypedValue value = visit(objectProperty.getValue(), context);
+                    map.put(identifier.getName(), value);
+                }
+            }
+        }
+        return new TypedValue(map, Map.class);
     }
 
     @Override

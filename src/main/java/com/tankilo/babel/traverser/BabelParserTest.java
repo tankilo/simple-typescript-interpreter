@@ -56,14 +56,9 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let y = 1;\n" +
-                "\n" +
-                "if (true) {\n" +
-                "  let y = 2;\n" +
-                "  console.log(y);\n" +
-                "}\n" +
-                "\n" +
-                "console.log(y);";
+        String code = "const object = { a: 1, b: 2, c: 3 };\n" +
+                "console.log(object[\"a\"]);\n" +
+                "console.log(object.b);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");
