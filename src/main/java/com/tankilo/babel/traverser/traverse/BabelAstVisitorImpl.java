@@ -201,7 +201,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 return left.times(right);
             case "/":
                 return left.div(right);
-
+            case "==":
+                return left.equals(right);
         }
         return null;
     }

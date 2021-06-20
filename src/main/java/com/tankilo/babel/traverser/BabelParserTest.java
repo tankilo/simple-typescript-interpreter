@@ -56,9 +56,7 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let myFavoriteNumber: any = 'seven';\n" +
-                "myFavoriteNumber = 7;" +
-                "console.log(myFavoriteNumber);";
+        String code = "console.log(1 == 1);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");

@@ -1,5 +1,7 @@
 package com.tankilo.babel.traverser.traverse;
 
+import java.util.Objects;
+
 public class TypedValue {
 
     private final Class<?> type;
@@ -59,6 +61,10 @@ public class TypedValue {
             return new TypedValue((Double) value / (Integer) other.getValue(), Double.class);
         }
         throw new BabelVisitException("this should never happen");
+    }
+
+    public TypedValue equals(TypedValue other) {
+        return new TypedValue(Objects.equals(value, other.getValue()), Boolean.class);
     }
 
     @Override
