@@ -20,7 +20,30 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             visit((VariableDeclaration) statement, context);
         } else if (statement instanceof ExpressionStatement) {
             visit((ExpressionStatement) statement, context);
+        } else if (statement instanceof BlockStatement) {
+            visit((BlockStatement) statement, context);
+        } else if (statement instanceof IfStatement) {
+            visit((IfStatement) statement, context);
         }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(IfStatement ifStatement, ContextScope context) {
+        Expression test = ifStatement.getTest();
+        TypedValue testValue = visit(test, context);
+        if (testValue.getType() == Boolean.class && (Boolean) testValue.getValue()) {
+            visit(ifStatement.getConsequent(), context);
+        } else {
+            visit(ifStatement.getAlternate(), context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(BlockStatement blockStatement, ContextScope context) {
+        List<Statement> body = blockStatement.getBody();
+        body.forEach(statement -> visit(statement, context));
         return null;
     }
 

@@ -56,7 +56,14 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "console.log(1 == 1);";
+        String code = "let name = \"javascript\";\n" +
+                "if (name == \"python\") {\n" +
+                "    console.log(\"python\")\n" +
+                "} else if  ( name == \"javascript\") {\n" +
+                "    console.log(\"javascript\");\n" +
+                "} else  {\n" +
+                "    console.log(\"java NO.1\");\n" +
+                "}";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");

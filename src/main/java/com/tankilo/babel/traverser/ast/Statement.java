@@ -8,8 +8,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
         @JsonSubTypes.Type(value = VariableDeclaration.class, name = "VariableDeclaration"),
-        @JsonSubTypes.Type(value = ExpressionStatement.class, name = "ExpressionStatement")
-}
+        @JsonSubTypes.Type(value = ExpressionStatement.class, name = "ExpressionStatement"),
+        @JsonSubTypes.Type(value = IfStatement.class, name = "IfStatement"),
+        @JsonSubTypes.Type(value = BlockStatement.class, name = "BlockStatement")}
 )
 public abstract class Statement extends Node {
 }
