@@ -77,19 +77,23 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             TypedValue initValue = visit(variableDeclarator.getInit(), context);
             context.getVariables().put(variableName, initValue);
         } else if (pattern instanceof ArrayPattern) {
-            ArrayPattern arrayPattern = (ArrayPattern) pattern;
-            List<Pattern> elements = arrayPattern.getElements();
-            TypedValue initValue = visit(variableDeclarator.getInit(), context);
-            if (initValue.getType() == List.class) {
-                List<TypedValue> initList = (List<TypedValue>) initValue.getValue();
-                for (int i = 0; i < elements.size(); i++) {
-                    Identifier identifier = (Identifier) elements.get(i);
-                    String variableName = identifier.getName();
-                    context.getVariables().put(variableName, initList.get(i));
-                }
-            }
+            massAssignment((ArrayPattern) pattern, variableDeclarator.getInit(), context);
         }
         return null;
+    }
+
+    private void massAssignment(ArrayPattern pattern, Expression expression, ContextScope context) {
+        ArrayPattern arrayPattern = pattern;
+        List<Pattern> elements = arrayPattern.getElements();
+        TypedValue initValue = visit(expression, context);
+        if (initValue.getType() == List.class) {
+            List<TypedValue> initList = (List<TypedValue>) initValue.getValue();
+            for (int i = 0; i < elements.size(); i++) {
+                Identifier identifier = (Identifier) elements.get(i);
+                String variableName = identifier.getName();
+                context.getVariables().put(variableName, initList.get(i));
+            }
+        }
     }
 
     @Override
@@ -110,6 +114,26 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((ArrayExpression) expression, context);
         } else if (expression instanceof MemberExpression) {
             return visit((MemberExpression) expression, context);
+        } else if (expression instanceof AssignmentExpression) {
+            return visit((AssignmentExpression) expression, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(AssignmentExpression expression, ContextScope context) {
+        Pattern left = expression.getLeft();
+        String operator = expression.getOperator();
+        Expression right = expression.getRight();
+        if (operator.equals("=")) {
+            if (left instanceof Identifier) {
+                Identifier identifier = (Identifier) left;
+                TypedValue rightValue = visit(right, context);
+                context.getVariables().put(identifier.getName(), rightValue);
+            } else if (left instanceof ArrayPattern) {
+                ArrayPattern arrayPattern = (ArrayPattern) left;
+                massAssignment(arrayPattern, right, context);
+            }
         }
         return null;
     }

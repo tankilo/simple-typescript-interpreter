@@ -14,6 +14,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = BooleanLiteral.class, name = "BooleanLiteral"),
         @JsonSubTypes.Type(value = MemberExpression.class, name = "MemberExpression"),
         @JsonSubTypes.Type(value = ArrayExpression.class, name = "ArrayExpression"),
+        @JsonSubTypes.Type(value = AssignmentExpression.class, name = "AssignmentExpression"),
         @JsonSubTypes.Type(value = BinaryExpression.class, name = "BinaryExpression")
 })
 public abstract class Expression extends Node {

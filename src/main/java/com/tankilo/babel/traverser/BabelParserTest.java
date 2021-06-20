@@ -56,7 +56,9 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let [a, b, c] = [1, 2, 3]; console.log(a);";
+        String code = "let a;\n" +
+                "a=12;\n" +
+                "console.log(a);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");
