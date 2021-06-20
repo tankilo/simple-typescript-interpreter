@@ -7,7 +7,6 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonTypeInfo(use = JsonTypeInfo.Id.NAME, include = JsonTypeInfo.As.PROPERTY, property = "type", visible = true)
 @JsonSubTypes({
-        @JsonSubTypes.Type(value = Identifier.class, name = "Identifier"),
         @JsonSubTypes.Type(value = StringLiteral.class, name = "StringLiteral"),
         @JsonSubTypes.Type(value = CallExpression.class, name = "CallExpression"),
         @JsonSubTypes.Type(value = NumericLiteral.class, name = "NumericLiteral"),
@@ -16,7 +15,9 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = ArrayExpression.class, name = "ArrayExpression"),
         @JsonSubTypes.Type(value = ObjectExpression.class, name = "ObjectExpression"),
         @JsonSubTypes.Type(value = AssignmentExpression.class, name = "AssignmentExpression"),
-        @JsonSubTypes.Type(value = BinaryExpression.class, name = "BinaryExpression")
+        @JsonSubTypes.Type(value = BinaryExpression.class, name = "BinaryExpression"),
+        @JsonSubTypes.Type(value = Identifier.class, name = "Identifier"),
+        @JsonSubTypes.Type(value = ArrayPattern.class, name = "ArrayPattern")
 })
-public abstract class Expression extends Node {
+public interface Expression {
 }

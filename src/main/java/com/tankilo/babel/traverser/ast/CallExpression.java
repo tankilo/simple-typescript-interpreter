@@ -2,7 +2,7 @@ package com.tankilo.babel.traverser.ast;
 
 import java.util.List;
 
-public class CallExpression extends Expression {
+public class CallExpression extends Node implements Expression {
     private Expression callee;
     private List<Expression> arguments;
 

@@ -4,8 +4,8 @@ import java.util.Objects;
 
 public class TypedValue {
 
-    private final Class<?> type;
-    private final Object value;
+    private Class<?> type;
+    private Object value;
 
     public TypedValue(Object value, Class<?> type) {
         this.type = type;
@@ -16,6 +16,11 @@ public class TypedValue {
     public TypedValue(Object value) {
         this.type = Object.class;
         this.value = value;
+    }
+
+    public void copy(TypedValue another) {
+        this.type = another.getType();
+        this.value = another.getValue();
     }
 
     public Class<?> getType() {

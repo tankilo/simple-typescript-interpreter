@@ -1,6 +1,6 @@
 package com.tankilo.babel.traverser.ast;
 
-public class BinaryExpression extends Expression {
+public class BinaryExpression extends Node implements Expression {
 
     /**
      * export type BinaryOperator =

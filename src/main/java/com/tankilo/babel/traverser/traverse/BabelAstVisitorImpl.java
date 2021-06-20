@@ -150,7 +150,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
     @Override
     public TypedValue visit(AssignmentExpression expression, ContextScope context) {
-        Pattern left = expression.getLeft();
+        Expression left = expression.getLeft();
         String operator = expression.getOperator();
         Expression right = expression.getRight();
         if (operator.equals("=")) {
@@ -161,6 +161,11 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             } else if (left instanceof ArrayPattern) {
                 ArrayPattern arrayPattern = (ArrayPattern) left;
                 massAssignment(arrayPattern, right, context);
+            } else if (left instanceof MemberExpression) {
+                MemberExpression memberExpression = (MemberExpression) left;
+                TypedValue typedValue = visit(memberExpression, context);
+                TypedValue rightValue = visit(right, context);
+                typedValue.copy(rightValue);
             }
         }
         return null;
@@ -197,8 +202,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     }
                 }
             }
-        }
-        else {
+        } else {
             if (object instanceof Identifier) {
                 TypedValue typedValue = context.getVariable(((Identifier) object).getName());
                 if (typedValue.getType() == Map.class) {
@@ -212,6 +216,15 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     Object result = map.get(propertyName);
                     if (result instanceof TypedValue) {
                         return (TypedValue) result;
+                    }
+                }
+            } else if (object instanceof MemberExpression) {
+                TypedValue left = visit((MemberExpression) object, context);
+                if (left.getType() == Map.class) {
+                    Map leftMap = (Map) left.getValue();
+                    if (property instanceof Identifier) {
+                        String propertyName = ((Identifier) property).getName();
+                        return (TypedValue) leftMap.get(propertyName);
                     }
                 }
             }
@@ -230,6 +243,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 if (objectProperty.getKey() instanceof Identifier) {
                     Identifier identifier = (Identifier) objectProperty.getKey();
                     TypedValue value = visit(objectProperty.getValue(), context);
+                    if (value == null) {
+                        value = new TypedValue(null);
+                    }
                     map.put(identifier.getName(), value);
                 }
             }

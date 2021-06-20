@@ -56,9 +56,11 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "const object = { a: 1, b: 2, c: 3 };\n" +
-                "console.log(object[\"a\"]);\n" +
-                "console.log(object.b);";
+        String code = "let o1 = { foo: undefined};\n" +
+                "let o2 = { bar: 'hello' };\n" +
+                "\n" +
+                "o1.foo = o2;\n" +
+                "console.log(o1.foo.bar);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");

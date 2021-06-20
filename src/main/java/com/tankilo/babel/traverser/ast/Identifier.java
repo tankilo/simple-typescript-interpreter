@@ -1,8 +1,6 @@
 package com.tankilo.babel.traverser.ast;
 
-import sun.reflect.annotation.TypeAnnotation;
-
-public class Identifier extends Expression implements Pattern {
+public class Identifier extends Node implements Pattern {
     private String name;
 
     private TypeAnnotationBase typeAnnotation;

@@ -2,7 +2,7 @@ package com.tankilo.babel.traverser.ast;
 
 import java.util.List;
 
-public class ObjectExpression extends Expression {
+public class ObjectExpression extends Node implements Expression {
     private List<ObjectMemberBase> properties;
 
     public List<ObjectMemberBase> getProperties() {

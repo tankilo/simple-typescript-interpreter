@@ -1,6 +1,6 @@
 package com.tankilo.babel.traverser.ast;
 
-public class AssignmentExpression extends Expression {
+public class AssignmentExpression extends Node implements Expression {
     /**
      * export type AssignmentOperator =
      * | "="
@@ -17,7 +17,7 @@ public class AssignmentExpression extends Expression {
      * | "&=";
      */
     private String operator;
-    private Pattern left;
+    private Expression left;
     private Expression right;
 
     public String getOperator() {
@@ -28,11 +28,11 @@ public class AssignmentExpression extends Expression {
         this.operator = operator;
     }
 
-    public Pattern getLeft() {
+    public Expression getLeft() {
         return left;
     }
 
-    public void setLeft(Pattern left) {
+    public void setLeft(Expression left) {
         this.left = left;
     }
 
