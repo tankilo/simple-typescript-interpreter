@@ -42,8 +42,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
     @Override
     public TypedValue visit(BlockStatement blockStatement, ContextScope context) {
+        ContextScope blockScope = new ContextScope(context);
         List<Statement> body = blockStatement.getBody();
-        body.forEach(statement -> visit(statement, context));
+        body.forEach(statement -> visit(statement, blockScope));
         return null;
     }
 
@@ -98,7 +99,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             Identifier identifier = (Identifier) pattern;
             String variableName = identifier.getName();
             TypedValue initValue = visit(variableDeclarator.getInit(), context);
-            context.getVariables().put(variableName, initValue);
+            context.putVariable(variableName, initValue);
         } else if (pattern instanceof ArrayPattern) {
             massAssignment((ArrayPattern) pattern, variableDeclarator.getInit(), context);
         }
@@ -114,7 +115,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             for (int i = 0; i < elements.size(); i++) {
                 Identifier identifier = (Identifier) elements.get(i);
                 String variableName = identifier.getName();
-                context.getVariables().put(variableName, initList.get(i));
+                context.putVariable(variableName, initList.get(i));
             }
         }
     }
@@ -152,7 +153,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             if (left instanceof Identifier) {
                 Identifier identifier = (Identifier) left;
                 TypedValue rightValue = visit(right, context);
-                context.getVariables().put(identifier.getName(), rightValue);
+                context.putVariable(identifier.getName(), rightValue);
             } else if (left instanceof ArrayPattern) {
                 ArrayPattern arrayPattern = (ArrayPattern) left;
                 massAssignment(arrayPattern, right, context);
@@ -167,7 +168,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         Expression property = expression.getProperty();
         if (expression.isComputed()) {
             if (object instanceof Identifier) {
-                TypedValue typedValue = context.getVariables().get(((Identifier) object).getName());
+                TypedValue typedValue = context.getVariable(((Identifier) object).getName());
                 if (typedValue.getType() == List.class) {
                     List list = (List) typedValue.getValue();
                     if (property instanceof NumericLiteral) {
@@ -195,7 +196,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
     @Override
     public TypedValue visit(Identifier identifier, ContextScope context) {
-        return context.getVariables().get(identifier.getName());
+        return context.getVariable(identifier.getName());
     }
 
     @Override

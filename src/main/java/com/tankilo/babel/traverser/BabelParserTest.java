@@ -56,14 +56,14 @@ public class BabelParserTest {
 
     public static void main(String[] args) {
         BabelParserTest v = new BabelParserTest();
-        String code = "let name = \"javascript\";\n" +
-                "if (name == \"python\") {\n" +
-                "    console.log(\"python\")\n" +
-                "} else if  ( name == \"javascript\") {\n" +
-                "    console.log(\"javascript\");\n" +
-                "} else  {\n" +
-                "    console.log(\"java NO.1\");\n" +
-                "}";
+        String code = "let y = 1;\n" +
+                "\n" +
+                "if (true) {\n" +
+                "  let y = 2;\n" +
+                "  console.log(y);\n" +
+                "}\n" +
+                "\n" +
+                "console.log(y);";
         System.out.println("====================Input=====================");
         System.out.println(code);
         System.out.println("====================Output=====================");

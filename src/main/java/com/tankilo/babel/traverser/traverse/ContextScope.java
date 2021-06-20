@@ -15,8 +15,16 @@ public class ContextScope {
 
     private Map<String, TypedValue> variables = new HashMap<>();
 
-    public Map<String, TypedValue> getVariables() {
-        return variables;
+    public TypedValue getVariable(String name) {
+        if (!variables.containsKey(name)) {
+            return parent.getVariable(name);
+        } else {
+            return variables.get(name);
+        }
+    }
+
+    public void putVariable(String name, TypedValue value) {
+        variables.put(name, value);
     }
 
     public ContextScope getParent() {
