@@ -17,6 +17,10 @@ public interface BabelAstVisitor {
 
     TypedValue visit(Expression expression, ContextScope context);
 
+    TypedValue visit(MemberExpression expression, ContextScope context);
+
+    TypedValue visit(ArrayExpression expression, ContextScope context);
+
     TypedValue visit(StringLiteral expression, ContextScope context);
 
     TypedValue visit(Identifier identifier, ContextScope context);

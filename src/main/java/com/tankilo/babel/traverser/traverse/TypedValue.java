@@ -10,6 +10,12 @@ public class TypedValue {
         this.value = value;
     }
 
+
+    public TypedValue(Object value) {
+        this.type = Object.class;
+        this.value = value;
+    }
+
     public Class<?> getType() {
         return type;
     }

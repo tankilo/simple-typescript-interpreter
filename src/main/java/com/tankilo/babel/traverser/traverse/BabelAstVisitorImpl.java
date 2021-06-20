@@ -53,8 +53,12 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                         if (methodName.getName().equals("log")) {
                             valueList.forEach(s -> System.out.print(s + " "));
                             System.out.println();
+                        } else {
+
                         }
                     }
+                } else {
+
                 }
             }
 
@@ -100,8 +104,39 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((CallExpression) expression, context);
         } else if (expression instanceof Identifier) {
             return visit((Identifier) expression, context);
+        } else if (expression instanceof ArrayExpression) {
+            return visit((ArrayExpression) expression, context);
+        } else if (expression instanceof MemberExpression) {
+            return visit((MemberExpression) expression, context);
         }
         return null;
+    }
+
+    @Override
+    public TypedValue visit(MemberExpression expression, ContextScope context) {
+        Expression object = expression.getObject();
+        Expression property = expression.getProperty();
+        if (expression.isComputed()) {
+            if (object instanceof Identifier) {
+                TypedValue typedValue = context.getVariables().get(((Identifier) object).getName());
+                if (typedValue.getType() == List.class) {
+                    List list = (List) typedValue.getValue();
+                    if(property instanceof NumericLiteral) {
+                        NumericLiteral numericLiteral = (NumericLiteral) property;
+                        int index = Integer.parseInt(numericLiteral.getValue());
+                        return (TypedValue) list.get(index);
+                    }
+                }
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(ArrayExpression expression, ContextScope context) {
+        List<Expression> elements = expression.getElements();
+        List<TypedValue> typedValues = elements.stream().map(s -> visit(s, context)).collect(Collectors.toList());
+        return new TypedValue(typedValues, List.class);
     }
 
     @Override
