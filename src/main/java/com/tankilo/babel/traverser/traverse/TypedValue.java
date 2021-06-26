@@ -130,6 +130,43 @@ public class TypedValue {
         throw new BabelVisitException("Relational operators only support string or number datatype, and both operands should have the same datatype!");
     }
 
+    public TypedValue and(TypedValue other) {
+        if (value instanceof Boolean && other.getValue() instanceof Boolean) {
+            Boolean left = (Boolean) value;
+            Boolean right = (Boolean) other.getValue();
+            if (Boolean.FALSE.equals(value) || Boolean.FALSE.equals(other.getValue())) {
+                return new TypedValue(Boolean.FALSE, Boolean.class);
+            }
+            if (value == null || other.getValue() == null) {
+                return new TypedValue(null);
+            }
+            return new TypedValue(Boolean.logicalAnd(left.booleanValue(), right.booleanValue()), Boolean.class);
+        }
+        throw new BabelVisitException("The logical AND (&&) operator only support operands with datatype boolean!");
+    }
+
+    public TypedValue or(TypedValue other) {
+        if (value instanceof Boolean && other.getValue() instanceof Boolean) {
+            Boolean left = (Boolean) value;
+            Boolean right = (Boolean) other.getValue();
+            if (Boolean.TRUE.equals(value) || Boolean.TRUE.equals(other.getValue())) {
+                return new TypedValue(Boolean.TRUE, Boolean.class);
+            }
+            if (value == null || other.getValue() == null) {
+                return new TypedValue(null);
+            }
+            return new TypedValue(Boolean.logicalOr(left.booleanValue(), right.booleanValue()), Boolean.class);
+        }
+        throw new BabelVisitException("The logical OR (||) operator only support operands with datatype boolean!");
+    }
+
+    public boolean booleanValue() {
+        if (value instanceof Boolean) {
+            return ((Boolean) value).booleanValue();
+        }
+        throw new BabelVisitException("Expect boolean datatype!");
+    }
+
     @Override
     public String toString() {
         return String.valueOf(value);

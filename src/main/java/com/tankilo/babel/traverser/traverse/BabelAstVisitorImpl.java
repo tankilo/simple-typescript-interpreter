@@ -169,6 +169,34 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((ArrowFunctionExpression) expression, context);
         } else if (expression instanceof UnaryExpression) {
             return visit((UnaryExpression) expression, context);
+        } else if (expression instanceof LogicalExpression) {
+            return visit((LogicalExpression) expression, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(LogicalExpression expression, ContextScope context) {
+        Expression left = expression.getLeft();
+        Expression right = expression.getRight();
+        String operator = expression.getOperator();
+        boolean leftValue;
+        boolean rightValue;
+        switch (operator) {
+            case "&&":
+                leftValue = visit(left, context).booleanValue();
+                if (!leftValue) {
+                    return new TypedValue(Boolean.FALSE, Boolean.class);
+                }
+                rightValue = visit(right, context).booleanValue();
+                return new TypedValue(rightValue, Boolean.class);
+            case "||":
+                leftValue = visit(left, context).booleanValue();
+                if (leftValue) {
+                    return new TypedValue(Boolean.TRUE, Boolean.class);
+                }
+                rightValue = visit(right, context).booleanValue();
+                return new TypedValue(rightValue, Boolean.class);
         }
         return null;
     }
@@ -177,7 +205,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     public TypedValue visit(UnaryExpression unaryExpression, ContextScope context) {
         Expression argument = unaryExpression.getArgument();
         TypedValue argumentValue = visit(argument, context);
-        switch (unaryExpression.getOperator()) {
+        String operator = unaryExpression.getOperator();
+        switch (operator) {
             case "-":
                 return argumentValue.negate();
             case "!":
