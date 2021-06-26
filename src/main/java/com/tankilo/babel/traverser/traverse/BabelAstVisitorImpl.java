@@ -180,6 +180,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         switch (unaryExpression.getOperator()) {
             case "-":
                 return argumentValue.negate();
+            case "!":
+                return argumentValue.not();
         }
         return null;
     }

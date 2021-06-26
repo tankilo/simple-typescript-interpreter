@@ -1,11 +1,5 @@
 package com.tankilo.babel.traverser.traverse;
 
-import com.tankilo.babel.traverser.InterpreterException;
-
-import java.math.BigDecimal;
-import java.time.LocalDate;
-import java.time.OffsetDateTime;
-import java.time.OffsetTime;
 import java.util.Objects;
 
 public class TypedValue {
@@ -90,6 +84,14 @@ public class TypedValue {
             return new TypedValue(Double.valueOf(-((Double) value).doubleValue()), Double.class);
         }
         throw new BabelVisitException("The unary negation operator only support js number datatype!");
+    }
+
+    public TypedValue not() {
+        if (value instanceof Boolean) {
+            boolean d = ((Boolean) value).booleanValue();
+            return new TypedValue(!d, Boolean.class);
+        }
+        throw new BabelVisitException("The logical NOT (!) operator only support js boolean datatype!");
     }
 
     public TypedValue lessThan(TypedValue other) {
