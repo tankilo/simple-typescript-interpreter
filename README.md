@@ -136,18 +136,37 @@ Prefix increment operator.
 * --A    
 Prefix decrement operator.
   
-## Function
+### Equality operators
+Currently, `===` and `!==` behave the same as `==` or `!=`.
+
+* ==    
+Equality operator.
+* !=   
+Inequality operator.
+* ===   
+Identity operator.
+* !==   
+Nonidentity operator.
+  
+### Assignment operators
+* =      
+Assignment operator.        
+
+## Function Declaration
+### Named Functions.
+### Anonymous Function
 ```typescript
-console.log(1,2,3);
+let Sum = function(x: number, y: number) : number
+{
+    return x + y;
+}
+
+console.log(Sum(2,3)); // returns 5
 ```
 
+### [Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
+Input:
 ```typescript
-let Print = () => console.log("Hello TypeScript");
-Print();
-```
-
-```
-====================Input======================
 function Greet(greeting: string, ...names: string[]) {
     return greeting + " " + names + "!";
 }
@@ -155,13 +174,23 @@ function Greet(greeting: string, ...names: string[]) {
 console.log(Greet("Hello", "Steve", "Bill")); // Hello Steve,Bill!
 
 console.log(Greet("Hello"));;// Hello !
-
-====================Output=====================
+```
+Output:
+```
 Hello [Steve, Bill]! 
 Hello []! 
-===============================================
 ```
 
+### [Arrow function expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
+example: 
+```typescript
+let Print = () => console.log("Hello TypeScript");
+Print();
+```
+
+
+### [Default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters)
+example:
 ```typescript
 function applyDiscount(price, discount = 0.05) {
     return price * (1 - discount);
