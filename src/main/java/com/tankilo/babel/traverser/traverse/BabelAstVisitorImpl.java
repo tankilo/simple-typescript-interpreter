@@ -416,13 +416,15 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
         switch (operator) {
             case "+":
-                return left.plus(right);
+                return left.add(right);
             case "-":
-                return left.minus(right);
+                return left.sub(right);
             case "*":
-                return left.times(right);
+                return left.mul(right);
             case "/":
                 return left.div(right);
+            case "%":
+                return left.mod(right);
             case "==":
             case "===":
                 return left.equals(right);

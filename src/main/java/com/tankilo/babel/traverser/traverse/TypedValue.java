@@ -50,23 +50,27 @@ public class TypedValue {
         return value;
     }
 
-    public TypedValue plus(TypedValue other) {
+    public TypedValue add(TypedValue other) {
         if (value instanceof String || other.getValue() instanceof String) {
             return new TypedValue(value + "" + other.getValue(), Integer.class);
         }
         return new TypedValue((Double) value + (Double) other.getValue(), Double.class);
     }
 
-    public TypedValue minus(TypedValue other) {
+    public TypedValue sub(TypedValue other) {
         return new TypedValue((Double) value - (Double) other.getValue(), Double.class);
     }
 
-    public TypedValue times(TypedValue other) {
+    public TypedValue mul(TypedValue other) {
         return new TypedValue((Double) value * (Integer) other.getValue(), Double.class);
     }
 
     public TypedValue div(TypedValue other) {
         return new TypedValue((Double) value / (Double) other.getValue(), Double.class);
+    }
+
+    public TypedValue mod(TypedValue other) {
+        return new TypedValue((Double) value % (Double) other.getValue(), Double.class);
     }
 
     public TypedValue equals(TypedValue other) {
