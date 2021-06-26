@@ -2,10 +2,7 @@ package com.tankilo.babel.traverser.traverse;
 
 import com.tankilo.babel.traverser.ast.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.TreeMap;
+import java.util.*;
 import java.util.stream.Collectors;
 
 public class BabelAstVisitorImpl implements BabelAstVisitor {
@@ -180,7 +177,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         Identifier functionIdentifier = functionDeclaration.getId();
         BlockStatement body = functionDeclaration.getBody();
         List<Pattern> params = functionDeclaration.getParams();
-        Map<String, TypedValue> formalParameters = new HashMap<>();
+        Map<String, TypedValue> formalParameters = new LinkedHashMap<>();
         boolean hasRestParamter = false;
         for (int i = 0; i < params.size(); i++) {
             Pattern formalParameter = params.get(i);
@@ -198,7 +195,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         context.putVariable(functionIdentifier.getName(), new TypedValue(new LambdaFunction() {
             @Override
             public TypedValue invoke(List<TypedValue> actualParams) {
-                TreeMap<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
+                Map<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
                 String[] keySet = formalParameters.keySet().toArray(new String[0]);
                 for (int i = 0; i < keySet.length; i++) {
                     if (i == keySet.length - 1 && finalHasRestParamter) {
@@ -235,7 +232,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         return new TypedValue(new LambdaFunction() {
             @Override
             public TypedValue invoke(List<TypedValue> actualParams) {
-                TreeMap<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
+                Map<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
                 String[] keySet = formalParameters.keySet().toArray(new String[0]);
                 for (int i = 0; i < keySet.length; i++) {
                     if (i == keySet.length - 1 && finalHasRestParamter) {
