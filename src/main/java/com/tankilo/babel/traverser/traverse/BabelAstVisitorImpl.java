@@ -189,8 +189,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 formalParameters.put(((Identifier) argument).getName(), new TypedValue(null));
                 assert i == params.size() - 1;
                 hasRestParamter = true;
-            } else if(formalParameter instanceof AssignmentPattern) {
-                AssignmentPattern assignmentPattern = (AssignmentPattern)formalParameter;
+            } else if (formalParameter instanceof AssignmentPattern) {
+                AssignmentPattern assignmentPattern = (AssignmentPattern) formalParameter;
                 Identifier left = (Identifier) assignmentPattern.getLeft();
                 TypedValue defaultValue = visit(assignmentPattern.getRight(), context);
                 formalParameters.put(left.getName(), defaultValue);
@@ -209,10 +209,17 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     }
                     if (i < actualParams.size()) {
                         TypedValue actualParam = actualParams.get(i);
-                        functionActualParameters.put(keySet[i], actualParam);
+                        if (actualParam.getValue() == null) {
+                            TypedValue formalParamValue = formalParameters.get(keySet[i]);
+                            if (formalParamValue.getValue() != null) {
+                                functionActualParameters.put(keySet[i], formalParamValue.clone());
+                            }
+                        } else {
+                            functionActualParameters.put(keySet[i], actualParam);
+                        }
                     } else {
                         TypedValue formalParamValue = formalParameters.get(keySet[i]);
-                        if(formalParamValue.getValue() != null) {
+                        if (formalParamValue.getValue() != null) {
                             functionActualParameters.put(keySet[i], formalParamValue.clone());
                         }
                     }
@@ -384,6 +391,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
 
     @Override
     public TypedValue visit(Identifier identifier, ContextScope context) {
+        if (identifier.getName().equals("undefined")) {
+            return new TypedValue(null);
+        }
         return context.getVariable(identifier.getName());
     }
 

@@ -51,3 +51,11 @@ console.log(applyDiscount(100, undefined)); // 95
 
 ```
 
+```typescript
+function applyDiscount(discount = 0.05, price) {
+    return price * (1 - discount);
+}
+
+console.log(applyDiscount(undefined, 100)); // 95
+```
+
