@@ -15,16 +15,6 @@ let Print = () => console.log("Hello TypeScript");
 Print();
 ```
 
-```typescript
-function Greet(greeting: string, ...names: string[]) {
-  return greeting + " " + names.join(", ") + "!";
-}
-
-Greet("Hello", "Steve", "Bill"); // returns "Hello Steve, Bill!"
-
-Greet("Hello");// returns "Hello !
-```
-
 ```
 ====================Input======================
 function Greet(greeting: string, ...names: string[]) {
