@@ -189,6 +189,11 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 formalParameters.put(((Identifier) argument).getName(), new TypedValue(null));
                 assert i == params.size() - 1;
                 hasRestParamter = true;
+            } else if(formalParameter instanceof AssignmentPattern) {
+                AssignmentPattern assignmentPattern = (AssignmentPattern)formalParameter;
+                Identifier left = (Identifier) assignmentPattern.getLeft();
+                TypedValue defaultValue = visit(assignmentPattern.getRight(), context);
+                formalParameters.put(left.getName(), defaultValue);
             }
         }
         boolean finalHasRestParamter = hasRestParamter;
@@ -202,8 +207,15 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                         functionActualParameters.put(keySet[i], new TypedValue(actualParams.subList(i, actualParams.size()), List.class));
                         break;
                     }
-                    TypedValue actualParam = actualParams.get(i);
-                    functionActualParameters.put(keySet[i], actualParam);
+                    if (i < actualParams.size()) {
+                        TypedValue actualParam = actualParams.get(i);
+                        functionActualParameters.put(keySet[i], actualParam);
+                    } else {
+                        TypedValue formalParamValue = formalParameters.get(keySet[i]);
+                        if(formalParamValue.getValue() != null) {
+                            functionActualParameters.put(keySet[i], formalParamValue.clone());
+                        }
+                    }
                 }
                 TypedValue result = visit(body, context);
                 context.getFunctionActualParameters().clear();

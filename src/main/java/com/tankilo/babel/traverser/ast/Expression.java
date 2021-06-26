@@ -19,6 +19,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = Identifier.class, name = "Identifier"),
         @JsonSubTypes.Type(value = ArrowFunctionExpression.class, name = "ArrowFunctionExpression"),
         @JsonSubTypes.Type(value = ArrayPattern.class, name = "ArrayPattern"),
+        @JsonSubTypes.Type(value = AssignmentPattern.class, name = "AssignmentPattern"),
         @JsonSubTypes.Type(value = RestElement.class, name = "RestElement")
 })
 public interface Expression {

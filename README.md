@@ -25,3 +25,29 @@ Greet("Hello", "Steve", "Bill"); // returns "Hello Steve, Bill!"
 Greet("Hello");// returns "Hello !
 ```
 
+```
+====================Input======================
+function Greet(greeting: string, ...names: string[]) {
+    return greeting + " " + names + "!";
+}
+
+console.log(Greet("Hello", "Steve", "Bill")); // Hello Steve,Bill!
+
+console.log(Greet("Hello"));;// Hello !
+
+====================Output=====================
+Hello [Steve, Bill]! 
+Hello []! 
+===============================================
+```
+
+```typescript
+function applyDiscount(price, discount = 0.05) {
+    return price * (1 - discount);
+}
+
+console.log(applyDiscount(100)); // 95
+console.log(applyDiscount(100, undefined)); // 95
+
+```
+
