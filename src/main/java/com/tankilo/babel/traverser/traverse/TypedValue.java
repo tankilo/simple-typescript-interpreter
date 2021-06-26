@@ -81,6 +81,17 @@ public class TypedValue {
         return new TypedValue(!Objects.equals(value, other.getValue()), Boolean.class);
     }
 
+    public TypedValue negate() {
+        if (value instanceof Double) {
+            double d = ((Double) value).doubleValue();
+            if (d == Double.MIN_VALUE) {
+                throw new ArithmeticException("double overflow");
+            }
+            return new TypedValue(Double.valueOf(-((Double) value).doubleValue()), Double.class);
+        }
+        throw new BabelVisitException("The unary negation operator only support js number datatype!");
+    }
+
     public TypedValue lessThan(TypedValue other) {
         if (value instanceof Double && other.getValue() instanceof Double) {
             return new TypedValue((Double) value < (Double) other.getValue(), Boolean.class);

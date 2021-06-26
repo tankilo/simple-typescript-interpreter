@@ -167,10 +167,22 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((ObjectExpression) expression, context);
         } else if (expression instanceof ArrowFunctionExpression) {
             return visit((ArrowFunctionExpression) expression, context);
+        } else if (expression instanceof UnaryExpression) {
+            return visit((UnaryExpression) expression, context);
         }
         return null;
     }
 
+    @Override
+    public TypedValue visit(UnaryExpression unaryExpression, ContextScope context) {
+        Expression argument = unaryExpression.getArgument();
+        TypedValue argumentValue = visit(argument, context);
+        switch (unaryExpression.getOperator()) {
+            case "-":
+                return argumentValue.negate();
+        }
+        return null;
+    }
 
     @Override
     public TypedValue visit(FunctionDeclaration functionDeclaration, ContextScope context) {
@@ -428,6 +440,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             case "==":
             case "===":
                 return left.equals(right);
+            case "!=":
+            case "!==":
+                return left.notEquals(right);
             case "<":
                 return left.lessThan(right);
             case "<=":

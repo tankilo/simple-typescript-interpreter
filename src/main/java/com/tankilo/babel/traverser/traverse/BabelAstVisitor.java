@@ -7,6 +7,8 @@ public interface BabelAstVisitor {
 
     TypedValue visit(Statement statement, ContextScope context);
 
+    TypedValue visit(UnaryExpression u, ContextScope context);
+
     TypedValue visit(FunctionDeclaration ifStatement, ContextScope context);
 
     TypedValue visit(ReturnStatement returnStatement, ContextScope context);
