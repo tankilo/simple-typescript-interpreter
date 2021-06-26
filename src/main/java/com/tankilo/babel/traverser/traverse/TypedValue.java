@@ -1,5 +1,11 @@
 package com.tankilo.babel.traverser.traverse;
 
+import com.tankilo.babel.traverser.InterpreterException;
+
+import java.math.BigDecimal;
+import java.time.LocalDate;
+import java.time.OffsetDateTime;
+import java.time.OffsetTime;
 import java.util.Objects;
 
 public class TypedValue {
@@ -56,33 +62,55 @@ public class TypedValue {
     }
 
     public TypedValue times(TypedValue other) {
-        if (value instanceof Integer && other.getValue() instanceof Integer) {
-            return new TypedValue((Integer) value * (Integer) other.getValue(), Integer.class);
-        } else if (value instanceof Double && other.getValue() instanceof Double) {
-            return new TypedValue((Double) value * (Double) other.getValue(), Double.class);
-        } else if (value instanceof Integer && other.getValue() instanceof Double) {
-            return new TypedValue((Integer) value * (Double) other.getValue(), Double.class);
-        } else if (value instanceof Double && other.getValue() instanceof Integer) {
-            return new TypedValue((Double) value * (Integer) other.getValue(), Double.class);
-        }
-        throw new BabelVisitException("this should never happen");
+        return new TypedValue((Double) value * (Integer) other.getValue(), Double.class);
     }
 
     public TypedValue div(TypedValue other) {
-        if (value instanceof Integer && other.getValue() instanceof Integer) {
-            return new TypedValue((Integer) value * 1.0 / (Integer) other.getValue(), Double.class);
-        } else if (value instanceof Double && other.getValue() instanceof Double) {
-            return new TypedValue((Double) value / (Double) other.getValue(), Double.class);
-        } else if (value instanceof Integer && other.getValue() instanceof Double) {
-            return new TypedValue((Integer) value / (Double) other.getValue(), Double.class);
-        } else if (value instanceof Double && other.getValue() instanceof Integer) {
-            return new TypedValue((Double) value / (Integer) other.getValue(), Double.class);
-        }
-        throw new BabelVisitException("this should never happen");
+        return new TypedValue((Double) value / (Double) other.getValue(), Double.class);
     }
 
     public TypedValue equals(TypedValue other) {
         return new TypedValue(Objects.equals(value, other.getValue()), Boolean.class);
+    }
+
+    public TypedValue notEquals(TypedValue other) {
+        return new TypedValue(!Objects.equals(value, other.getValue()), Boolean.class);
+    }
+
+    public TypedValue lessThan(TypedValue other) {
+        if (value instanceof Double && other.getValue() instanceof Double) {
+            return new TypedValue((Double) value < (Double) other.getValue(), Boolean.class);
+        } else if (value instanceof String && other.getValue() instanceof String) {
+            return new TypedValue(((String) value).compareTo((String) other.getValue()) < 0, Boolean.class);
+        }
+        throw new BabelVisitException("Relational operators only support string or number datatype, and both operands should have the same datatype!");
+    }
+
+    public TypedValue lessThanOrEqual(TypedValue other) {
+        if (value instanceof Double && other.getValue() instanceof Double) {
+            return new TypedValue((Double) value <= (Double) other.getValue(), Boolean.class);
+        } else if (value instanceof String && other.getValue() instanceof String) {
+            return new TypedValue(((String) value).compareTo((String) other.getValue()) <= 0, Boolean.class);
+        }
+        throw new BabelVisitException("Relational operators only support string or number datatype, and both operands should have the same datatype!");
+    }
+
+    public TypedValue greaterThan(TypedValue other) {
+        if (value instanceof Double && other.getValue() instanceof Double) {
+            return new TypedValue((Double) value > (Double) other.getValue(), Boolean.class);
+        } else if (value instanceof String && other.getValue() instanceof String) {
+            return new TypedValue(((String) value).compareTo((String) other.getValue()) > 0, Boolean.class);
+        }
+        throw new BabelVisitException("Relational operators only support string or number datatype, and both operands should have the same datatype!");
+    }
+
+    public TypedValue greaterOrEqual(TypedValue other) {
+        if (value instanceof Double && other.getValue() instanceof Double) {
+            return new TypedValue((Double) value >= (Double) other.getValue(), Boolean.class);
+        } else if (value instanceof String && other.getValue() instanceof String) {
+            return new TypedValue(((String) value).compareTo((String) other.getValue()) >= 0, Boolean.class);
+        }
+        throw new BabelVisitException("Relational operators only support string or number datatype, and both operands should have the same datatype!");
     }
 
     @Override

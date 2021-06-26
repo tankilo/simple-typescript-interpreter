@@ -424,7 +424,16 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             case "/":
                 return left.div(right);
             case "==":
+            case "===":
                 return left.equals(right);
+            case "<":
+                return left.lessThan(right);
+            case "<=":
+                return left.lessThanOrEqual(right);
+            case ">":
+                return left.greaterThan(right);
+            case ">=":
+                return left.greaterOrEqual(right);
         }
         return null;
     }
