@@ -102,6 +102,30 @@ console.log(object["a"]);
 console.log(object.b);
 ```
 
+### Binary logical operators
+
+* &&    
+Logical AND.    
+* ||  
+Logical OR.     
+
+```typescript
+const a = 3;
+const b = -2;
+
+console.log(a > 0 && b > 0);
+// expected output: false
+console.log(a > 0 || b > 0);
+// expected output: false
+```
+### Unary operators
+
+* \-      
+The unary negation operator converts its operand to Number type and then negates it.
+
+* \!          
+Logical NOT operator.
+
 
 ## Function
 ```typescript
