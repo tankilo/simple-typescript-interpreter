@@ -12,6 +12,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = IfStatement.class, name = "IfStatement"),
         @JsonSubTypes.Type(value = BlockStatement.class, name = "BlockStatement"),
         @JsonSubTypes.Type(value = FunctionDeclaration.class, name = "FunctionDeclaration"),
+        @JsonSubTypes.Type(value = EmptyStatement.class, name = "EmptyStatement"),
         @JsonSubTypes.Type(value = ReturnStatement.class, name = "ReturnStatement")}
 )
 public abstract class Statement extends Node {

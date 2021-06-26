@@ -26,8 +26,18 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             visit((BlockStatement) statement, context);
         } else if (statement instanceof IfStatement) {
             visit((IfStatement) statement, context);
+        } else if (statement instanceof FunctionDeclaration) {
+            visit((FunctionDeclaration) statement, context);
+        } else if (statement instanceof ReturnStatement) {
+            return visit((ReturnStatement) statement, context);
         }
         return null;
+    }
+
+    @Override
+    public TypedValue visit(ReturnStatement returnStatement, ContextScope context) {
+        Expression argument = returnStatement.getArgument();
+        return visit(argument, context);
     }
 
     @Override
@@ -46,7 +56,14 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     public TypedValue visit(BlockStatement blockStatement, ContextScope context) {
         ContextScope blockScope = new ContextScope(context);
         List<Statement> body = blockStatement.getBody();
-        body.forEach(statement -> visit(statement, blockScope));
+        for (int i = 0; i < body.size(); i++) {
+            Statement statement = body.get(i);
+            if (statement instanceof ReturnStatement) {
+                return visit(statement, blockScope);
+            } else {
+                visit(statement, blockScope);
+            }
+        }
         return null;
     }
 
@@ -78,10 +95,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     if (property instanceof Identifier) {
                         Identifier methodName = (Identifier) property;
                         if (methodName.getName().equals("log")) {
+
                             valueList.forEach(s -> System.out.print(s + " "));
                             System.out.println();
-                        } else {
-
                         }
                     }
                 } else {
@@ -92,9 +108,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     }
                 }
             }
-        }
-        else if(callee instanceof Identifier) {
-            TypedValue method = context.getVariable(((Identifier)callee).getName());
+        } else if (callee instanceof Identifier) {
+            TypedValue method = context.getVariable(((Identifier) callee).getName());
             if (method.getType() == LambdaFunction.class) {
                 LambdaFunction function = (LambdaFunction) method.getValue();
                 return function.invoke(valueList);
@@ -159,23 +174,75 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         return null;
     }
 
+
+    @Override
+    public TypedValue visit(FunctionDeclaration functionDeclaration, ContextScope context) {
+        Identifier functionIdentifier = functionDeclaration.getId();
+        BlockStatement body = functionDeclaration.getBody();
+        List<Pattern> params = functionDeclaration.getParams();
+        Map<String, TypedValue> formalParameters = new HashMap<>();
+        boolean hasRestParamter = false;
+        for (int i = 0; i < params.size(); i++) {
+            Pattern formalParameter = params.get(i);
+            if (formalParameter instanceof Identifier) {
+                formalParameters.put(((Identifier) formalParameter).getName(), new TypedValue(null));
+            } else if (formalParameter instanceof RestElement) {
+                RestElement restElement = (RestElement) formalParameter;
+                Pattern argument = restElement.getArgument();
+                formalParameters.put(((Identifier) argument).getName(), new TypedValue(null));
+                assert i == params.size() - 1;
+                hasRestParamter = true;
+            }
+        }
+        boolean finalHasRestParamter = hasRestParamter;
+        context.putVariable(functionIdentifier.getName(), new TypedValue(new LambdaFunction() {
+            @Override
+            public TypedValue invoke(List<TypedValue> actualParams) {
+                TreeMap<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
+                String[] keySet = formalParameters.keySet().toArray(new String[0]);
+                for (int i = 0; i < keySet.length; i++) {
+                    if (i == keySet.length - 1 && finalHasRestParamter) {
+                        functionActualParameters.put(keySet[i], new TypedValue(actualParams.subList(i, actualParams.size()), List.class));
+                        break;
+                    }
+                    TypedValue actualParam = actualParams.get(i);
+                    functionActualParameters.put(keySet[i], actualParam);
+                }
+                TypedValue result = visit(body, context);
+                context.getFunctionActualParameters().clear();
+                return result;
+            }
+        }, LambdaFunction.class));
+        return null;
+    }
+
+
     @Override
     public TypedValue visit(ArrowFunctionExpression expression, ContextScope context) {
         Map<String, TypedValue> formalParameters = new HashMap<>();
-        for (Pattern param : expression.getParams()) {
-            if (param instanceof Identifier) {
-                formalParameters.put(((Identifier) param).getName(), new TypedValue(null));
+        boolean hasRestParamter = false;
+        for (int i = 0; i < expression.getParams().size(); i++) {
+            Pattern formalParameter = expression.getParams().get(i);
+            if (formalParameter instanceof Identifier) {
+                formalParameters.put(((Identifier) formalParameter).getName(), new TypedValue(null));
+            } else if (formalParameter instanceof RestElement) {
+                assert i == expression.getParams().size() - 1;
+                hasRestParamter = true;
             }
         }
         Node body = expression.getBody();
+        boolean finalHasRestParamter = hasRestParamter;
         return new TypedValue(new LambdaFunction() {
             @Override
             public TypedValue invoke(List<TypedValue> actualParams) {
-                int i = 0;
                 TreeMap<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
-                for (String key : formalParameters.keySet()) {
+                String[] keySet = formalParameters.keySet().toArray(new String[0]);
+                for (int i = 0; i < keySet.length; i++) {
+                    if (i == keySet.length - 1 && finalHasRestParamter) {
+                        functionActualParameters.put(keySet[i], new TypedValue(actualParams.subList(i, actualParams.size()), List.class));
+                    }
                     TypedValue actualParam = actualParams.get(i);
-                    functionActualParameters.put(key, actualParam);
+                    functionActualParameters.put(keySet[i], actualParam);
                 }
                 TypedValue result;
                 if (body instanceof BlockStatement) {

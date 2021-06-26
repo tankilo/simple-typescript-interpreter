@@ -18,10 +18,16 @@ public class ContextScope {
     private TreeMap<String, TypedValue> functionActualParameters = new TreeMap<>();
 
     public TypedValue getVariable(String name) {
-        if (parent != null && !variables.containsKey(name)) {
+        if (functionActualParameters.containsKey(name)) {
+            return functionActualParameters.get(name);
+        }
+        if (variables.containsKey(name)) {
+            return variables.get(name);
+        }
+        if (parent != null) {
             return parent.getVariable(name);
         } else {
-            return variables.get(name);
+            return new TypedValue(null);
         }
     }
 
