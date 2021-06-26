@@ -171,6 +171,29 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((UnaryExpression) expression, context);
         } else if (expression instanceof LogicalExpression) {
             return visit((LogicalExpression) expression, context);
+        } else if (expression instanceof UpdateExpression) {
+            return visit((UpdateExpression) expression, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(UpdateExpression expression, ContextScope context) {
+        Expression argument = expression.getArgument();
+        TypedValue argumentValue = visit(argument, context);
+        String operator = expression.getOperator();
+        double oldValue = argumentValue.doubleValue();
+        double newValue;
+        boolean prefix = expression.isPrefix();
+        switch (operator) {
+            case "++":
+                newValue = argumentValue.doubleValue() + 1;
+                argumentValue.copy(new TypedValue(newValue, Double.class));
+                return new TypedValue(prefix ? newValue : oldValue, Double.class);
+            case "--":
+                newValue = argumentValue.doubleValue() - 1;
+                argumentValue.copy(new TypedValue(newValue, Double.class));
+                return new TypedValue(prefix ? newValue : oldValue, Double.class);
         }
         return null;
     }

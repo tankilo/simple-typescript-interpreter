@@ -126,7 +126,16 @@ The unary negation operator converts its operand to Number type and then negates
 * \!          
 Logical NOT operator.
 
-
+### Postfix/prefix increment and postfix/prefix decrement operators
+* A++   
+Postfix increment operator.  
+* A--   
+Postfix decrement operator.  
+* ++A    
+Prefix increment operator.
+* --A    
+Prefix decrement operator.
+  
 ## Function
 ```typescript
 console.log(1,2,3);

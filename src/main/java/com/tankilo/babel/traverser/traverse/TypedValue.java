@@ -167,6 +167,13 @@ public class TypedValue {
         throw new BabelVisitException("Expect boolean datatype!");
     }
 
+    public double doubleValue() {
+        if (value instanceof Double) {
+            return ((Double) value).doubleValue();
+        }
+        throw new BabelVisitException("Expect nummber datatype!");
+    }
+
     @Override
     public String toString() {
         return String.valueOf(value);
