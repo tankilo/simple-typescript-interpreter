@@ -31,6 +31,7 @@ public class TypeScriptInterpreter {
         try {
             file = objectMapper.readValue(json, com.tankilo.babel.traverser.ast.File.class);
         } catch (JsonProcessingException e) {
+            e.printStackTrace();
             throw new InterpreterException("The typescript code you input is not supported yet!");
         }
         ContextScope contextScope = new ContextScope();

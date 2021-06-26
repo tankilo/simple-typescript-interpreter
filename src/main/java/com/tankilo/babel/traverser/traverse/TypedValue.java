@@ -23,6 +23,19 @@ public class TypedValue {
         this.value = another.getValue();
     }
 
+    @Override
+    public TypedValue clone() {
+        if (type == Double.class) {
+            return new TypedValue(((Double) value).doubleValue(), type);
+        } else if (type == Boolean.class) {
+            return new TypedValue(((Boolean) value).booleanValue(), type);
+
+        } else if (type == String.class) {
+            return new TypedValue(String.valueOf(value), type);
+        }
+        return this;
+    }
+
     public Class<?> getType() {
         return type;
     }

@@ -21,6 +21,8 @@ public interface BabelAstVisitor {
 
     TypedValue visit(Expression expression, ContextScope context);
 
+    TypedValue visit(ArrowFunctionExpression expression, ContextScope context);
+
     TypedValue visit(AssignmentExpression expression, ContextScope context);
 
     TypedValue visit(MemberExpression expression, ContextScope context);

@@ -2,6 +2,7 @@ package com.tankilo.babel.traverser.traverse;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TreeMap;
 
 public class ContextScope {
     private ContextScope parent;
@@ -14,6 +15,7 @@ public class ContextScope {
     }
 
     private Map<String, TypedValue> variables = new HashMap<>();
+    private TreeMap<String, TypedValue> functionActualParameters = new TreeMap<>();
 
     public TypedValue getVariable(String name) {
         if (parent != null && !variables.containsKey(name)) {
@@ -33,5 +35,13 @@ public class ContextScope {
 
     public void setParent(ContextScope parent) {
         this.parent = parent;
+    }
+
+    public TreeMap<String, TypedValue> getFunctionActualParameters() {
+        return functionActualParameters;
+    }
+
+    public void setFunctionActualParameters(TreeMap<String, TypedValue> functionActualParameters) {
+        this.functionActualParameters = functionActualParameters;
     }
 }

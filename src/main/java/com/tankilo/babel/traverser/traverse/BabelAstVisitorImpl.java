@@ -5,7 +5,7 @@ import com.tankilo.babel.traverser.ast.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.function.Consumer;
+import java.util.TreeMap;
 import java.util.stream.Collectors;
 
 public class BabelAstVisitorImpl implements BabelAstVisitor {
@@ -85,12 +85,21 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                         }
                     }
                 } else {
-
+                    TypedValue method = context.getVariable(object1.getName());
+                    if (method.getType() == LambdaFunction.class) {
+                        LambdaFunction function = (LambdaFunction) method;
+                        return function.invoke(valueList);
+                    }
                 }
             }
-
         }
-
+        else if(callee instanceof Identifier) {
+            TypedValue method = context.getVariable(((Identifier)callee).getName());
+            if (method.getType() == LambdaFunction.class) {
+                LambdaFunction function = (LambdaFunction) method.getValue();
+                return function.invoke(valueList);
+            }
+        }
         return null;
     }
 
@@ -144,8 +153,40 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((AssignmentExpression) expression, context);
         } else if (expression instanceof ObjectExpression) {
             return visit((ObjectExpression) expression, context);
+        } else if (expression instanceof ArrowFunctionExpression) {
+            return visit((ArrowFunctionExpression) expression, context);
         }
         return null;
+    }
+
+    @Override
+    public TypedValue visit(ArrowFunctionExpression expression, ContextScope context) {
+        Map<String, TypedValue> formalParameters = new HashMap<>();
+        for (Pattern param : expression.getParams()) {
+            if (param instanceof Identifier) {
+                formalParameters.put(((Identifier) param).getName(), new TypedValue(null));
+            }
+        }
+        Node body = expression.getBody();
+        return new TypedValue(new LambdaFunction() {
+            @Override
+            public TypedValue invoke(List<TypedValue> actualParams) {
+                int i = 0;
+                TreeMap<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
+                for (String key : formalParameters.keySet()) {
+                    TypedValue actualParam = actualParams.get(i);
+                    functionActualParameters.put(key, actualParam);
+                }
+                TypedValue result;
+                if (body instanceof BlockStatement) {
+                    result = visit((BlockStatement) body, context);
+                } else {
+                    result = visit((Expression) body, context);
+                }
+                context.getFunctionActualParameters().clear();
+                return result;
+            }
+        }, LambdaFunction.class);
     }
 
     @Override
