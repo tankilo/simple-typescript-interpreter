@@ -1,35 +1,36 @@
 # Support Syntax
 Refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 ## DataTypes
+* string
+```typescript
+let authorName: string = "tankilo";
+```
+* number              
+typescript `number` datatype will be cast to java type `Double`.
+```typescript
+let age: number=18;
+console.log(18); // will print 18.0
+```
+
+* boolean
 ```typescript
 let state: boolean = false;
 ```
 
-```typescript
-var myObj = 1; console.log(myObj);
-```
-
+* any
+Infact, type annotaion is ignored and the type of a variable is inferred based on the type of its initializer.
 ```typescript
 let myFavoriteNumber: any = 'seven';
-myFavoriteNumber = 7;
-console.log(myFavoriteNumber);
 ```
 
+* object literal
 ```typescript
 const object = { a: 1, b: 2, c: 3 };
 console.log(object["a"]);
 console.log(object.b);
 ```
 
-```typescript
-let o1 = { foo: undefined};
-let o2 = { bar: 'hello' };
-
-o1.foo = o2;
-console.log(o1.foo.bar);
-```
-
-### Array
+*  Array
 ```typescript
 let fibonacci: number[] = [1, 2, 3, 4, 5];
 console.log(fibonacci[1]);
@@ -40,23 +41,67 @@ let [a, b, c] = [1, 2, 3]; console.log(a);
 ```
 
 ## Operators
-### Addition (+)
-* Numeric addition     
-  js number datatype will be read as string, if it contains `.`, then will be cast to java type Double, otherwise cast to Integer.
-* String concatenation
 
+### Relational operators
+* <         
+Less than operator.
+* \>          
+Greater than operator.
+* <=            
+Less than or equal operator.
+* \>=                                
+Greater than or equal operator.
+
+only support operands with string or number datatype and both operands should have the same datatype!
+
+example:
+```typescript
+console.log(5 < 3);
+console.log(3 <= 3);
+
+console.log(3 > 3);
+console.log(3 >= 3);
+
+console.log("a" < "b");
+console.log("a" <= "a");
+console.log("a" > "a");
+console.log("b" >= "a");
+```
+
+### Arithmetic operators
+
+* \+              
+Addition operator.                      
+* \-             
+Subtraction operator.                
+* /               
+Division operator.
+* \*              
+Multiplication operator.
+* %                            
+Remainder operator.
+
+#### about Addition (+)
+* Numeric addition       
+* String concatenation     
+
+currently, please concatenate operhand with the same datatype.      
+  
+bad example:
 ```typescript
 var myObj = 1+"2";
-console.log(myObj);
+console.log(myObj);// will print 1.02 instead of 12. because `1` is read as Double.
 ```
 
-```typescript
-let state: number = 2/4;
-```
+### [Member operators (Property accessors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#left-hand-side_expressions)
+> Property accessors provide access to an object's properties by using the dot notation or the bracket notation.
 
 ```typescript
-console.log(1 == 1);
+const object = { a: 1, b: 2, c: 3 };
+console.log(object["a"]);
+console.log(object.b);
 ```
+
 
 ## Function
 ```typescript
