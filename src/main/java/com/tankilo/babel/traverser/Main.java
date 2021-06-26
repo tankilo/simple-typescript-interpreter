@@ -20,7 +20,11 @@ public class Main {
         }
 
         System.out.println("Please input your typescript code, plus an 'end' after last line：");
-
+        String code1 = "let o1 = { foo: undefined};\n" +
+                "let o2 = { bar: 'hello' };\n" +
+                "\n" +
+                "o1.foo = o2;\n" +
+                "console.log(o1.foo.bar);";
         StringBuilder sb = new StringBuilder();
         try (InputStreamReader in = new InputStreamReader(System.in);
              BufferedReader buffer = new BufferedReader(in)) {
@@ -49,5 +53,6 @@ public class Main {
         } catch (Exception e) {
             e.printStackTrace();
         }
+
     }
 }
