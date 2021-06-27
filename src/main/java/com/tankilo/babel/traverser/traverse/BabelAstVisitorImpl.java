@@ -35,6 +35,52 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((ForStatement) statement, context);
         } else if (statement instanceof ForInStatement) {
             return visit((ForInStatement) statement, context);
+        } else if (statement instanceof ForOfStatement) {
+            return visit((ForOfStatement) statement, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(ForOfStatement forOfStatement, ContextScope context) {
+        VariableDeclaration left = forOfStatement.getLeft();
+        visit(left, context);
+        Identifier leftId = (Identifier) left.getDeclarations().get(0).getId();
+        Expression right = forOfStatement.getRight();
+        TypedValue rightValue = visit(right, context);
+        Statement body = forOfStatement.getBody();
+
+        if (rightValue.getType() == List.class) {
+            List list = (List) rightValue.getValue();
+            for (Object o : list) {
+                context.getVariable(leftId.getName()).setValue(o);
+                TypedValue resultValue = visit(body, context);
+                if (resultValue == null) {
+                    continue;
+                }
+                if (resultValue.isBreakFlag()) {
+                    return null;
+                }
+                if (resultValue != null) {
+                    return resultValue;
+                }
+            }
+        } else if (rightValue.getType() == String.class) {
+            String string = (String) rightValue.getValue();
+            for (int i = 0; i < string.length(); i++) {
+                char c = string.charAt(i);
+                context.getVariable(leftId.getName()).setValue(c);
+                TypedValue resultValue = visit(body, context);
+                if (resultValue == null) {
+                    continue;
+                }
+                if (resultValue.isBreakFlag()) {
+                    return null;
+                }
+                if (resultValue != null) {
+                    return resultValue;
+                }
+            }
         }
         return null;
     }
@@ -68,6 +114,21 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             Set set = map.keySet();
             for (Object o : set) {
                 context.getVariable(leftId.getName()).setValue(o);
+                TypedValue resultValue = visit(body, context);
+                if (resultValue == null) {
+                    continue;
+                }
+                if (resultValue.isBreakFlag()) {
+                    return null;
+                }
+                if (resultValue != null) {
+                    return resultValue;
+                }
+            }
+        } else if (rightValue.getType() == String.class) {
+            String string = (String) rightValue.getValue();
+            for (int i = 0; i < string.length(); i++) {
+                context.getVariable(leftId.getName()).setValue(i);
                 TypedValue resultValue = visit(body, context);
                 if (resultValue == null) {
                     continue;
@@ -547,6 +608,17 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     Object result = map.get(propertyName);
                     if (result instanceof TypedValue) {
                         return (TypedValue) result;
+                    }
+                }
+                if (typedValue.getType() == String.class) {
+                    String string = (String) typedValue.getValue();
+                    if (property instanceof NumericLiteral) {
+                        NumericLiteral numericLiteral = (NumericLiteral) property;
+                        int index = Integer.parseInt(numericLiteral.getValue());
+                        return new TypedValue(string.charAt(index));
+                    } else if (property instanceof Identifier) {
+                        int index = context.getVariable(((Identifier) property).getName()).intValue();
+                        return new TypedValue(string.charAt(index));
                     }
                 }
             }
