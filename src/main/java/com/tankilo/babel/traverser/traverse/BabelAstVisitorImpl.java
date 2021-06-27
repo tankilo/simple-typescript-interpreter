@@ -201,8 +201,14 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         if (pattern instanceof Identifier) {
             Identifier identifier = (Identifier) pattern;
             String variableName = identifier.getName();
-            TypedValue initValue = visit(variableDeclarator.getInit(), context);
-            context.putVariable(variableName, initValue);
+            Expression init = variableDeclarator.getInit();
+            if (null != init) {
+                TypedValue initValue = visit(init, context);
+                context.putVariable(variableName, initValue);
+            } else {
+                context.putVariable(variableName, new TypedValue(null));
+            }
+
         } else if (pattern instanceof ArrayPattern) {
             massAssignment((ArrayPattern) pattern, variableDeclarator.getInit(), context);
         }
