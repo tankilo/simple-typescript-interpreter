@@ -395,6 +395,57 @@ for (const property in object) {
 //c
 ```
 
+```typescript
+let str = "He";
+
+for (var index in str) {
+  console.log(index+""+str[index]); 
+}
+
+// expected output:
+// 0H
+// 1e
+```
+
+```typescript
+let arr = [10, 20, 30, 40];
+
+for (var index in arr) {
+  console.log(index+" "+arr[index]);
+}
+// expected output:
+//0 10.0
+//1 20.0
+//2 30.0
+//3 40.0 
+```
+## for...of statement
+
+```typescript
+let arr = [10, 20, 30, 40];
+
+for (var val of arr) {
+  console.log(val);
+}
+// expected output:
+//10.0
+//20.0
+//30.0
+//40.0
+```
+
+```typescript
+let str = "He";
+
+for (var char of str) {
+  console.log(char); // prints chars: H e l l o  W o r l d
+}
+
+// expected output:
+// H
+// e
+```
+
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
 
 > When a variable is declared using let, it uses what some call lexical-scoping or block-scoping. Unlike variables declared with var whose scopes leak out to their containing function, block-scoped variables are not visible outside of their nearest containing block or for-loop.
