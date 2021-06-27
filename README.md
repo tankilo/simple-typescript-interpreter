@@ -3,35 +3,31 @@
 Refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
 
 ## DataTypes
+Tips: Infact, type annotaion is ignored and the type of a variable is inferred based on the type of its initializer.
 
 * string
-
 ```typescript
 let authorName: string = "tankilo";
 ```
 
-* number              
-  typescript `number` datatype will be cast to java type `Double`.
-
+* number                  
+typescript `number` datatype will be cast to java type `Double`.
 ```typescript
 let age: number = 18;
 console.log(18); // will print 18.0
 ```
 
 * boolean
-
 ```typescript
 let state: boolean = false;
 ```
 
-* any Infact, type annotaion is ignored and the type of a variable is inferred based on the type of its initializer.
-
+* any
 ```typescript
 let myFavoriteNumber: any = 'seven';
 ```
 
 * object literal
-
 ```typescript
 const object = {a: 1, b: 2, c: 3};
 console.log(object["a"]);
@@ -39,7 +35,6 @@ console.log(object.b);
 ```
 
 * Array
-
 ```typescript
 let fibonacci: number[] = [1, 2, 3, 4, 5];
 console.log(fibonacci[1]);
@@ -51,7 +46,6 @@ console.log(a);
 ```
 
 ## Variable Declaration
-
 Only support the let declarations!!!
 
 ## Operators
