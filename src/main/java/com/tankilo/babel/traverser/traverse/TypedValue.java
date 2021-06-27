@@ -4,18 +4,25 @@ import java.util.Objects;
 
 public class TypedValue {
 
+    public static final TypedValue BREAK = new TypedValue(true);
+
     private Class<?> type;
     private Object value;
+
+    private boolean breakFlag;
 
     public TypedValue(Object value, Class<?> type) {
         this.type = type;
         this.value = value;
     }
 
-
     public TypedValue(Object value) {
         this.type = Object.class;
         this.value = value;
+    }
+
+    public TypedValue(boolean breakFlag) {
+        this.breakFlag = breakFlag;
     }
 
     public void copy(TypedValue another) {
@@ -172,6 +179,14 @@ public class TypedValue {
             return ((Double) value).doubleValue();
         }
         throw new BabelVisitException("Expect nummber datatype!");
+    }
+
+    public boolean isBreakFlag() {
+        return breakFlag;
+    }
+
+    public void setBreakFlag(boolean breakFlag) {
+        this.breakFlag = breakFlag;
     }
 
     @Override

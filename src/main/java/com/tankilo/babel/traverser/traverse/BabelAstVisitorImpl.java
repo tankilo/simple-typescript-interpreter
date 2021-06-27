@@ -16,13 +16,13 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
     @Override
     public TypedValue visit(Statement statement, ContextScope context) {
         if (statement instanceof VariableDeclaration) {
-            visit((VariableDeclaration) statement, context);
+            return visit((VariableDeclaration) statement, context);
         } else if (statement instanceof ExpressionStatement) {
-            visit((ExpressionStatement) statement, context);
+            return visit((ExpressionStatement) statement, context);
         } else if (statement instanceof BlockStatement) {
-            visit((BlockStatement) statement, context);
+            return visit((BlockStatement) statement, context);
         } else if (statement instanceof IfStatement) {
-            visit((IfStatement) statement, context);
+            return visit((IfStatement) statement, context);
         } else if (statement instanceof FunctionDeclaration) {
             visit((FunctionDeclaration) statement, context);
         } else if (statement instanceof ReturnStatement) {
@@ -30,7 +30,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         } else if (statement instanceof SwitchStatement) {
             return visit((SwitchStatement) statement, context);
         } else if (statement instanceof BreakStatement) {
-            return null;
+            return TypedValue.BREAK;
         }
         return null;
     }
@@ -58,7 +58,16 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     if (statement instanceof ReturnStatement) {
                         return visit(statement, context);
                     }
-                    visit(statement, context);
+                    TypedValue resultValue = visit(statement, context);
+                    if (resultValue == null) {
+                        continue;
+                    }
+                    if (resultValue.isBreakFlag()) {
+                        return null;
+                    }
+                    if (resultValue != null) {
+                        return resultValue;
+                    }
                 }
             }
         }
@@ -101,7 +110,10 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             if (statement instanceof ReturnStatement) {
                 return visit(statement, blockScope);
             } else {
-                visit(statement, blockScope);
+                TypedValue value = visit(statement, blockScope);
+                if (null != value && value.isBreakFlag()) {
+                    return value;
+                }
             }
         }
         return null;

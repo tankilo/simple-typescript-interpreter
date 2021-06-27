@@ -290,8 +290,8 @@ if (x < y) {
 
 # [Switch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
 
+## Example1
 Input:
-
 ```typescript
 var foo = 0;
 switch (foo) {
@@ -317,6 +317,35 @@ Expected output:
 ```typescript
 0.0
 1.0 
+```
+
+## Example2
+Input:
+```typescript
+const action = 'say_hello';
+switch (action) {
+  case 'say_hello': { // added brackets
+    let message = 'hello';
+    console.log(message);
+    break;
+  } // added brackets
+  case 'say_hi': { // added brackets
+    let message = 'hi';
+    console.log(message);
+    break;
+  } // added brackets
+  default: { // added brackets
+    console.log('Empty action received.');
+    break;
+  } // added brackets
+}
+```
+
+
+Expected output:
+
+```typescript
+hello
 ```
 
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
