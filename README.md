@@ -286,9 +286,9 @@ if (x < y) {
 } 
 ```
 
-# [Switch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
+## [Switch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
 
-## Example1
+### Example1
 
 Input:
 
@@ -319,7 +319,7 @@ Expected output:
 1.0 
 ```
 
-## Example2
+### Example2
 
 Input:
 
@@ -349,9 +349,9 @@ Expected output:
 hello
 ```
 
-# For
+## For
 
-## for statement
+### for statement
 
 ```typescript
 let str = '';
@@ -375,7 +375,7 @@ console.log(str);
 // expected output: "0.01.02.03.04.05.06.07.08.0"
 ```
 
-## for...in statement
+### for...in statement
 
 ```typescript
 const object = {a: 1, b: 2, c: 3};
@@ -413,7 +413,7 @@ for (var index in arr) {
 //2 30.0
 //3 40.0 
 ```
-## for...of statement
+### for...of statement
 
 ```typescript
 let arr = [10, 20, 30, 40];
@@ -440,7 +440,7 @@ for (var char of str) {
 // e
 ```
 
-# While
+## While
 ```typescript
 let n = 0;
 
@@ -452,7 +452,7 @@ console.log(n);
 // expected output: 3.0
 ```
 
-# [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
+## [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
 
 > When a variable is declared using let, it uses what some call lexical-scoping or block-scoping. Unlike variables declared with var whose scopes leak out to their containing function, block-scoped variables are not visible outside of their nearest containing block or for-loop.
 
