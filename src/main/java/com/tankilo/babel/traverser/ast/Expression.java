@@ -24,6 +24,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = UpdateExpression.class, name = "UpdateExpression"),
         @JsonSubTypes.Type(value = FunctionExpression.class, name = "FunctionExpression"),
         @JsonSubTypes.Type(value = LogicalExpression.class, name = "LogicalExpression"),
+        @JsonSubTypes.Type(value = ConditionalExpression.class, name = "ConditionalExpression"),
         @JsonSubTypes.Type(value = RestElement.class, name = "RestElement")
 })
 public interface Expression {

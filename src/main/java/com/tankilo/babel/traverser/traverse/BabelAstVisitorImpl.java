@@ -175,8 +175,18 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((UpdateExpression) expression, context);
         } else if (expression instanceof FunctionExpression) {
             return visit((FunctionExpression) expression, context);
+        } else if (expression instanceof ConditionalExpression) {
+            return visit((ConditionalExpression) expression, context);
         }
         return null;
+    }
+
+    @Override
+    public TypedValue visit(ConditionalExpression expression, ContextScope context) {
+        Expression test = expression.getTest();
+        Expression alternate = expression.getAlternate();
+        Expression consequent = expression.getConsequent();
+        return visit(test, context).booleanValue() ? visit(consequent, context) : visit(alternate, context);
     }
 
     @Override

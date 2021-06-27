@@ -152,8 +152,24 @@ Nonidentity operator.
 * =      
 Assignment operator.        
 
+### Ternary operator
+```typescript
+let x: number = 10, y = 20;
+
+x > y? console.log('x is greater than y.'): console.log('x is less than or equal to y.')
+
+// expect output: x is less than or equal to y.
+```
+
 ## Function Declaration
 ### Named Functions.
+```typescript
+function display() {
+    console.log("Hello TypeScript!");
+}
+
+display(); //Output: Hello TypeScript! 
+```
 ### Anonymous Function
 ```typescript
 let Sum = function(x: number, y: number) : number
