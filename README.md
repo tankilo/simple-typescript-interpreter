@@ -50,6 +50,10 @@ let [a, b, c] = [1, 2, 3];
 console.log(a);
 ```
 
+
+## Variable Declaration
+Only support the let declarations!!!
+
 ## Operators
 
 ### Relational operators
