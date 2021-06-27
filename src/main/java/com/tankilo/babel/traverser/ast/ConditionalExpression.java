@@ -1,5 +1,8 @@
 package com.tankilo.babel.traverser.ast;
 
+/**
+ * A conditional expression, i.e., a ternary ?/: expression.
+ */
 public class ConditionalExpression extends Node implements Expression {
     private Expression test;
     private Expression alternate;
