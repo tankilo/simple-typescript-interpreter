@@ -37,6 +37,27 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((ForInStatement) statement, context);
         } else if (statement instanceof ForOfStatement) {
             return visit((ForOfStatement) statement, context);
+        } else if (statement instanceof WhileStatement) {
+            return visit((WhileStatement) statement, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(WhileStatement whileStatement, ContextScope context) {
+        Expression test = whileStatement.getTest();
+        Statement body = whileStatement.getBody();
+        while (visit(test, context).booleanValue()) {
+            TypedValue bodyValue = visit(body, context);
+            if (bodyValue == null) {
+                continue;
+            }
+            if (bodyValue.isBreakFlag()) {
+                return null;
+            }
+            if (bodyValue != null) {
+                return bodyValue;
+            }
         }
         return null;
     }

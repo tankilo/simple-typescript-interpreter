@@ -446,6 +446,18 @@ for (var char of str) {
 // e
 ```
 
+# While
+```typescript
+let n = 0;
+
+while (n < 3) {
+  n++;
+}
+
+console.log(n);
+// expected output: 3.0
+```
+
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
 
 > When a variable is declared using let, it uses what some call lexical-scoping or block-scoping. Unlike variables declared with var whose scopes leak out to their containing function, block-scoped variables are not visible outside of their nearest containing block or for-loop.
