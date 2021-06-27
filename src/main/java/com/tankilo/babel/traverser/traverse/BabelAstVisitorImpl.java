@@ -48,24 +48,36 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         TypedValue rightValue = visit(right, context);
         Statement body = forInStatement.getBody();
 
-        Collection rightCollection = null;
         if (rightValue.getType() == List.class) {
-            rightCollection = (List) rightValue.getValue();
+            List list = (List) rightValue.getValue();
+            for (int i = 0; i < list.size(); i++) {
+                context.getVariable(leftId.getName()).setValue(i);
+                TypedValue resultValue = visit(body, context);
+                if (resultValue == null) {
+                    continue;
+                }
+                if (resultValue.isBreakFlag()) {
+                    return null;
+                }
+                if (resultValue != null) {
+                    return resultValue;
+                }
+            }
         } else if (rightValue.getType() == Map.class) {
-            Map map = (Map)rightValue.getValue();
-            rightCollection = map.keySet();
-        }
-        for (Object o : rightCollection) {
-            context.getVariable(leftId.getName()).setValue(o);
-            TypedValue resultValue = visit(body, context);
-            if (resultValue == null) {
-                continue;
-            }
-            if (resultValue.isBreakFlag()) {
-                return null;
-            }
-            if (resultValue != null) {
-                return resultValue;
+            Map map = (Map) rightValue.getValue();
+            Set set = map.keySet();
+            for (Object o : set) {
+                context.getVariable(leftId.getName()).setValue(o);
+                TypedValue resultValue = visit(body, context);
+                if (resultValue == null) {
+                    continue;
+                }
+                if (resultValue.isBreakFlag()) {
+                    return null;
+                }
+                if (resultValue != null) {
+                    return resultValue;
+                }
             }
         }
         return null;
@@ -518,6 +530,9 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     if (property instanceof NumericLiteral) {
                         NumericLiteral numericLiteral = (NumericLiteral) property;
                         int index = Integer.parseInt(numericLiteral.getValue());
+                        return (TypedValue) list.get(index);
+                    } else if (property instanceof Identifier) {
+                        int index = context.getVariable(((Identifier) property).getName()).intValue();
                         return (TypedValue) list.get(index);
                     }
                 }

@@ -185,6 +185,17 @@ public class TypedValue {
         throw new BabelVisitException("Expect nummber datatype!");
     }
 
+    public int intValue() {
+        if (value instanceof Double) {
+            return (int) ((Double) value).doubleValue();
+        }
+        if (value instanceof Integer) {
+            return ((Integer) value).intValue();
+        }
+        throw new BabelVisitException("Expect nummber datatype!");
+    }
+
+
     public boolean isBreakFlag() {
         return breakFlag;
     }
