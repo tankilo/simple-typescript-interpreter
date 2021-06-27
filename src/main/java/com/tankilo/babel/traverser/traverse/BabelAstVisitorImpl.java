@@ -27,6 +27,49 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             visit((FunctionDeclaration) statement, context);
         } else if (statement instanceof ReturnStatement) {
             return visit((ReturnStatement) statement, context);
+        } else if (statement instanceof SwitchStatement) {
+            return visit((SwitchStatement) statement, context);
+        } else if (statement instanceof BreakStatement) {
+            return null;
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(SwitchStatement switchStatement, ContextScope context) {
+        Expression discriminant = switchStatement.getDiscriminant();
+        TypedValue discriminantValue = visit(discriminant, context);
+        List<SwitchCase> cases = switchStatement.getCases();
+        boolean preCriterionMet = false;
+        SwitchCase defaultCase = null;
+        for (SwitchCase switchCase : cases) {
+            Expression test = switchCase.getTest();
+            if (null == test) {
+                defaultCase = switchCase;
+                continue;
+            }
+            if (preCriterionMet || discriminantValue.equals(visit(test, context)).booleanValue()) {
+                preCriterionMet = true;
+                List<Statement> consequent = switchCase.getConsequent();
+                for (Statement statement : consequent) {
+                    if (statement instanceof BreakStatement) {
+                        return null;
+                    }
+                    if (statement instanceof ReturnStatement) {
+                        return visit(statement, context);
+                    }
+                    visit(statement, context);
+                }
+            }
+        }
+        List<Statement> consequent = defaultCase.getConsequent();
+        for (Statement statement : consequent) {
+            if (statement instanceof BreakStatement) {
+                return null;
+            }
+            if (statement instanceof ReturnStatement) {
+                return visit(statement, context);
+            }
         }
         return null;
     }

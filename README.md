@@ -1,60 +1,72 @@
 # Support Syntax
+
 Refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
+
 ## DataTypes
+
 * string
+
 ```typescript
 let authorName: string = "tankilo";
 ```
+
 * number              
-typescript `number` datatype will be cast to java type `Double`.
+  typescript `number` datatype will be cast to java type `Double`.
+
 ```typescript
-let age: number=18;
+let age: number = 18;
 console.log(18); // will print 18.0
 ```
 
 * boolean
+
 ```typescript
 let state: boolean = false;
 ```
 
-* any
-Infact, type annotaion is ignored and the type of a variable is inferred based on the type of its initializer.
+* any Infact, type annotaion is ignored and the type of a variable is inferred based on the type of its initializer.
+
 ```typescript
 let myFavoriteNumber: any = 'seven';
 ```
 
 * object literal
+
 ```typescript
-const object = { a: 1, b: 2, c: 3 };
+const object = {a: 1, b: 2, c: 3};
 console.log(object["a"]);
 console.log(object.b);
 ```
 
-*  Array
+* Array
+
 ```typescript
 let fibonacci: number[] = [1, 2, 3, 4, 5];
 console.log(fibonacci[1]);
 ```
 
 ```typescript
-let [a, b, c] = [1, 2, 3]; console.log(a);
+let [a, b, c] = [1, 2, 3];
+console.log(a);
 ```
 
 ## Operators
 
 ### Relational operators
+
 * <         
-Less than operator.
+  Less than operator.
 * \>          
-Greater than operator.
+  Greater than operator.
 * <=            
-Less than or equal operator.
+  Less than or equal operator.
 * \>=                                
-Greater than or equal operator.
+  Greater than or equal operator.
 
 only support operands with string or number datatype and both operands should have the same datatype!
 
 example:
+
 ```typescript
 console.log(5 < 3);
 console.log(3 <= 3);
@@ -71,33 +83,36 @@ console.log("b" >= "a");
 ### Arithmetic operators
 
 * \+              
-Addition operator.                      
+  Addition operator.
 * \-             
-Subtraction operator.                
+  Subtraction operator.
 * /               
-Division operator.
+  Division operator.
 * \*              
-Multiplication operator.
+  Multiplication operator.
 * %                            
-Remainder operator.
+  Remainder operator.
 
 #### about Addition (+)
-* Numeric addition       
-* String concatenation     
 
-currently, please concatenate operhand with the same datatype.      
-  
+* Numeric addition
+* String concatenation
+
+currently, please concatenate operhand with the same datatype.
+
 bad example:
+
 ```typescript
-var myObj = 1+"2";
+var myObj = 1 + "2";
 console.log(myObj);// will print 1.02 instead of 12. because `1` is read as Double.
 ```
 
 ### [Member operators (Property accessors)](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Operators#left-hand-side_expressions)
+
 > Property accessors provide access to an object's properties by using the dot notation or the bracket notation.
 
 ```typescript
-const object = { a: 1, b: 2, c: 3 };
+const object = {a: 1, b: 2, c: 3};
 console.log(object["a"]);
 console.log(object.b);
 ```
@@ -105,9 +120,9 @@ console.log(object.b);
 ### Binary logical operators
 
 * &&    
-Logical AND.    
+  Logical AND.
 * ||  
-Logical OR.     
+  Logical OR.
 
 ```typescript
 const a = 3;
@@ -118,51 +133,58 @@ console.log(a > 0 && b > 0);
 console.log(a > 0 || b > 0);
 // expected output: false
 ```
+
 ### Unary operators
 
 * \-      
-The unary negation operator converts its operand to Number type and then negates it.
+  The unary negation operator converts its operand to Number type and then negates it.
 
 * \!          
-Logical NOT operator.
+  Logical NOT operator.
 
 ### Postfix/prefix increment and postfix/prefix decrement operators
+
 * A++   
-Postfix increment operator.  
+  Postfix increment operator.
 * A--   
-Postfix decrement operator.  
+  Postfix decrement operator.
 * ++A    
-Prefix increment operator.
+  Prefix increment operator.
 * --A    
-Prefix decrement operator.
-  
+  Prefix decrement operator.
+
 ### Equality operators
+
 Currently, `===` and `!==` behave the same as `==` or `!=`.
 
 * ==    
-Equality operator.
+  Equality operator.
 * !=   
-Inequality operator.
+  Inequality operator.
 * ===   
-Identity operator.
+  Identity operator.
 * !==   
-Nonidentity operator.
-  
+  Nonidentity operator.
+
 ### Assignment operators
+
 * =      
-Assignment operator.        
+  Assignment operator.
 
 ### Ternary operator
+
 ```typescript
 let x: number = 10, y = 20;
 
-x > y? console.log('x is greater than y.'): console.log('x is less than or equal to y.')
+x > y ? console.log('x is greater than y.') : console.log('x is less than or equal to y.')
 
 // expect output: x is less than or equal to y.
 ```
 
 ## Function Declaration
+
 ### Named Functions.
+
 ```typescript
 function display() {
     console.log("Hello TypeScript!");
@@ -170,18 +192,21 @@ function display() {
 
 display(); //Output: Hello TypeScript! 
 ```
+
 ### Anonymous Function
+
 ```typescript
-let Sum = function(x: number, y: number) : number
-{
+let Sum = function (x: number, y: number): number {
     return x + y;
 }
 
-console.log(Sum(2,3)); // returns 5.0
+console.log(Sum(2, 3)); // returns 5.0
 ```
 
 ### [Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
+
 Input:
+
 ```typescript
 function Greet(greeting: string, ...names: string[]) {
     return greeting + " " + names + "!";
@@ -189,24 +214,30 @@ function Greet(greeting: string, ...names: string[]) {
 
 console.log(Greet("Hello", "Steve", "Bill")); // Hello Steve,Bill!
 
-console.log(Greet("Hello"));;// Hello !
+console.log(Greet("Hello"));
+;// Hello !
 ```
+
 Output:
+
 ```
 Hello [Steve, Bill]! 
 Hello []! 
 ```
 
 ### [Arrow function expressions](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Arrow_functions)
-example: 
+
+example:
+
 ```typescript
 let Print = () => console.log("Hello TypeScript");
 Print();
 ```
 
-
 ### [Default parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/Default_parameters)
+
 example:
+
 ```typescript
 function applyDiscount(price, discount = 0.05) {
     return price * (1 - discount);
@@ -226,13 +257,14 @@ console.log(applyDiscount(undefined, 100)); // 95
 ```
 
 ## IF
+
 ```typescript
 let name = "javascript";
 if (name == "python") {
     console.log("python");
-} else if ( name == javascript) {
+} else if (name == javascript) {
     console.log(javascript);
-} else  {
+} else {
     console.log("java NO.1");
 }
 ```
@@ -241,8 +273,8 @@ if (name == "python") {
 let y = 1;
 
 if (true) {
-  let y = 2;
-  console.log(y);
+    let y = 2;
+    console.log(y);
 }
 
 console.log(y);
@@ -251,26 +283,59 @@ console.log(y);
 ```typescript
 let x: number = 10, y = 20;
 
-if (x < y)
-{
+if (x < y) {
     console.log('x is less than y');
 } 
 ```
 
+# [Switch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
+
+Input:
+
+```typescript
+var foo = 0;
+switch (foo) {
+    case -1:
+        console.log('negative 1');
+        break;
+    case 0: // foo is 0 so criteria met here so this block will run
+        console.log(0);
+    // NOTE: the forgotten break would have been here
+    case 1: // no break statement in 'case 0:' so this case will run as well
+        console.log(1);
+        break; // it encounters this break so will not continue into 'case 2:'
+    default:
+        console.log('default');
+    case 2:
+        console.log(2);
+        break;
+}
+```
+
+Expected output:
+
+```typescript
+0.0
+1.0 
+```
+
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
+
 > When a variable is declared using let, it uses what some call lexical-scoping or block-scoping. Unlike variables declared with var whose scopes leak out to their containing function, block-scoped variables are not visible outside of their nearest containing block or for-loop.
+
 ```typescript
 let y = 1;
 
 if (true) {
-  let y = 2;
-  console.log(y);
+    let y = 2;
+    console.log(y);
 }
 
 console.log(y);
 ```
 
 output:
+
 ```
 2.0 
 1.0 
