@@ -31,6 +31,32 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((SwitchStatement) statement, context);
         } else if (statement instanceof BreakStatement) {
             return TypedValue.BREAK;
+        } else if (statement instanceof ForStatement) {
+            return visit((ForStatement) statement, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(ForStatement forStatement, ContextScope context) {
+        Node init = forStatement.getInit();
+        if (init instanceof VariableDeclaration) {
+            visit((VariableDeclaration) init, context);
+        } else {
+            visit((Expression) init, context);
+        }
+        Expression test = forStatement.getTest();
+        Expression update = forStatement.getUpdate();
+        Statement body = forStatement.getBody();
+        for (; test == null || visit(test, context).booleanValue(); visit(update, context)) {
+            TypedValue temp = visit(body, context);
+            if (null == temp) {
+                continue;
+            }
+            if (temp.isBreakFlag()) {
+                break;
+            }
+            return temp;
         }
         return null;
     }
@@ -94,11 +120,10 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         Expression test = ifStatement.getTest();
         TypedValue testValue = visit(test, context);
         if (testValue.getType() == Boolean.class && (Boolean) testValue.getValue()) {
-            visit(ifStatement.getConsequent(), context);
+            return visit(ifStatement.getConsequent(), context);
         } else {
-            visit(ifStatement.getAlternate(), context);
+            return visit(ifStatement.getAlternate(), context);
         }
-        return null;
     }
 
     @Override
@@ -424,7 +449,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             if (left instanceof Identifier) {
                 Identifier identifier = (Identifier) left;
                 TypedValue rightValue = visit(right, context);
-                context.putVariable(identifier.getName(), rightValue);
+                TypedValue typedValue = context.getVariable(identifier.getName());
+                typedValue.copy(rightValue);
             } else if (left instanceof ArrayPattern) {
                 ArrayPattern arrayPattern = (ArrayPattern) left;
                 massAssignment(arrayPattern, right, context);

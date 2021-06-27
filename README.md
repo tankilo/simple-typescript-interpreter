@@ -352,6 +352,30 @@ Expected output:
 hello
 ```
 
+# For
+```typescript
+let str = '';
+
+for (let i = 0; i < 9; i++) {
+  str = str + i;
+}
+
+console.log(str);
+// expected output: "0.01.02.03.04.05.06.07.08.0"
+```
+
+```typescript
+let str = '';
+let i;
+for (i = 0; i < 9; i++) {
+  str = str + i;
+}
+
+console.log(str);
+// expected output: "0.01.02.03.04.05.06.07.08.0"
+```
+
+
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
 
 > When a variable is declared using let, it uses what some call lexical-scoping or block-scoping. Unlike variables declared with var whose scopes leak out to their containing function, block-scoped variables are not visible outside of their nearest containing block or for-loop.
