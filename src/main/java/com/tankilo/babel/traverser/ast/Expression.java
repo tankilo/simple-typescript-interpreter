@@ -22,6 +22,7 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
         @JsonSubTypes.Type(value = AssignmentPattern.class, name = "AssignmentPattern"),
         @JsonSubTypes.Type(value = UnaryExpression.class, name = "UnaryExpression"),
         @JsonSubTypes.Type(value = UpdateExpression.class, name = "UpdateExpression"),
+        @JsonSubTypes.Type(value = FunctionExpression.class, name = "FunctionExpression"),
         @JsonSubTypes.Type(value = LogicalExpression.class, name = "LogicalExpression"),
         @JsonSubTypes.Type(value = RestElement.class, name = "RestElement")
 })

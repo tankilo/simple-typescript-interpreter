@@ -173,6 +173,8 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return visit((LogicalExpression) expression, context);
         } else if (expression instanceof UpdateExpression) {
             return visit((UpdateExpression) expression, context);
+        } else if (expression instanceof FunctionExpression) {
+            return visit((FunctionExpression) expression, context);
         }
         return null;
     }
@@ -238,11 +240,15 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
         return null;
     }
 
+
     @Override
-    public TypedValue visit(FunctionDeclaration functionDeclaration, ContextScope context) {
-        Identifier functionIdentifier = functionDeclaration.getId();
-        BlockStatement body = functionDeclaration.getBody();
-        List<Pattern> params = functionDeclaration.getParams();
+    public TypedValue visit(FunctionExpression expression, ContextScope context) {
+        return visit((FunctionBase) expression, context);
+    }
+
+    public TypedValue visit(FunctionBase expression, ContextScope context) {
+        BlockStatement body = expression.getBody();
+        List<Pattern> params = expression.getParams();
         Map<String, TypedValue> formalParameters = new LinkedHashMap<>();
         boolean hasRestParamter = false;
         for (int i = 0; i < params.size(); i++) {
@@ -263,7 +269,7 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             }
         }
         boolean finalHasRestParamter = hasRestParamter;
-        context.putVariable(functionIdentifier.getName(), new TypedValue(new LambdaFunction() {
+        return new TypedValue(new LambdaFunction() {
             @Override
             public TypedValue invoke(List<TypedValue> actualParams) {
                 Map<String, TypedValue> functionActualParameters = context.getFunctionActualParameters();
@@ -294,7 +300,13 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                 context.getFunctionActualParameters().clear();
                 return result;
             }
-        }, LambdaFunction.class));
+        }, LambdaFunction.class);
+    }
+
+    @Override
+    public TypedValue visit(FunctionDeclaration functionDeclaration, ContextScope context) {
+        Identifier functionIdentifier = functionDeclaration.getId();
+        context.putVariable(functionIdentifier.getName(), visit((FunctionBase) functionDeclaration, context));
         return null;
     }
 

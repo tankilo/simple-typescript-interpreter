@@ -161,7 +161,7 @@ let Sum = function(x: number, y: number) : number
     return x + y;
 }
 
-console.log(Sum(2,3)); // returns 5
+console.log(Sum(2,3)); // returns 5.0
 ```
 
 ### [Rest parameters](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Functions/rest_parameters)
