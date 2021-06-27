@@ -33,6 +33,40 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
             return TypedValue.BREAK;
         } else if (statement instanceof ForStatement) {
             return visit((ForStatement) statement, context);
+        } else if (statement instanceof ForInStatement) {
+            return visit((ForInStatement) statement, context);
+        }
+        return null;
+    }
+
+    @Override
+    public TypedValue visit(ForInStatement forInStatement, ContextScope context) {
+        VariableDeclaration left = forInStatement.getLeft();
+        visit(left, context);
+        Identifier leftId = (Identifier) left.getDeclarations().get(0).getId();
+        Expression right = forInStatement.getRight();
+        TypedValue rightValue = visit(right, context);
+        Statement body = forInStatement.getBody();
+
+        Collection rightCollection = null;
+        if (rightValue.getType() == List.class) {
+            rightCollection = (List) rightValue.getValue();
+        } else if (rightValue.getType() == Map.class) {
+            Map map = (Map)rightValue.getValue();
+            rightCollection = map.keySet();
+        }
+        for (Object o : rightCollection) {
+            context.getVariable(leftId.getName()).setValue(o);
+            TypedValue resultValue = visit(body, context);
+            if (resultValue == null) {
+                continue;
+            }
+            if (resultValue.isBreakFlag()) {
+                return null;
+            }
+            if (resultValue != null) {
+                return resultValue;
+            }
         }
         return null;
     }

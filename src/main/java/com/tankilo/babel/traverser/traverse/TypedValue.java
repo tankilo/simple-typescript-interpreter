@@ -51,6 +51,10 @@ public class TypedValue {
         return value;
     }
 
+    public void setValue(Object value) {
+        this.value = value;
+    }
+
     public TypedValue add(TypedValue other) {
         if (value instanceof String || other.getValue() instanceof String) {
             return new TypedValue(value + "" + other.getValue(), Integer.class);

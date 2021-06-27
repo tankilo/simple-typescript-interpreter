@@ -50,8 +50,8 @@ let [a, b, c] = [1, 2, 3];
 console.log(a);
 ```
 
-
 ## Variable Declaration
+
 Only support the let declarations!!!
 
 ## Operators
@@ -295,7 +295,9 @@ if (x < y) {
 # [Switch](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/switch)
 
 ## Example1
+
 Input:
+
 ```typescript
 var foo = 0;
 switch (foo) {
@@ -324,27 +326,28 @@ Expected output:
 ```
 
 ## Example2
+
 Input:
+
 ```typescript
 const action = 'say_hello';
 switch (action) {
-  case 'say_hello': { // added brackets
-    let message = 'hello';
-    console.log(message);
-    break;
-  } // added brackets
-  case 'say_hi': { // added brackets
-    let message = 'hi';
-    console.log(message);
-    break;
-  } // added brackets
-  default: { // added brackets
-    console.log('Empty action received.');
-    break;
-  } // added brackets
+    case 'say_hello': { // added brackets
+        let message = 'hello';
+        console.log(message);
+        break;
+    } // added brackets
+    case 'say_hi': { // added brackets
+        let message = 'hi';
+        console.log(message);
+        break;
+    } // added brackets
+    default: { // added brackets
+        console.log('Empty action received.');
+        break;
+    } // added brackets
 }
 ```
-
 
 Expected output:
 
@@ -353,11 +356,14 @@ hello
 ```
 
 # For
+
+## for statement
+
 ```typescript
 let str = '';
 
 for (let i = 0; i < 9; i++) {
-  str = str + i;
+    str = str + i;
 }
 
 console.log(str);
@@ -368,13 +374,26 @@ console.log(str);
 let str = '';
 let i;
 for (i = 0; i < 9; i++) {
-  str = str + i;
+    str = str + i;
 }
 
 console.log(str);
 // expected output: "0.01.02.03.04.05.06.07.08.0"
 ```
 
+## for...in statement
+
+```typescript
+const object = {a: 1, b: 2, c: 3};
+
+for (const property in object) {
+    console.log(property);
+}
+// expected output:
+//a
+//b
+//c
+```
 
 # [Block Scope](https://www.typescriptlang.org/docs/handbook/variable-declarations.html#block-scoping)
 
