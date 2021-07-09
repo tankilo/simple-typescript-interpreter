@@ -12,6 +12,14 @@ Currently, i only support a small subset of TypeScript  Syntax. And i place a lo
 
 The input code should be compiled and executed with TypeScript offical toolkit. This project  aims to execute code, it will not check whether the code comply with TypeScript grammar.
 
+# How to run the code
+Execute `com.tankilo.typescript.interpreter.Main`, it's a simple command line tool.
+
+![screen](assets/screen.gif)
+
+
+
+
 # Support Syntax
 
 Refer to https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference
