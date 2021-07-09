@@ -4,13 +4,13 @@ A simple TypeScript interpreter written in Java base on Babel Parser's ast. Only
 # Why i write it
 I need to execute TypeScript in Java and I didn't found any existing opensource TypeScript Interpreter to use.
 
-This project looks more like trying out my new ideas. I just want to know wether l can interpret typescript in java application. I don't spend too much time and pay no attention to performance now.
+This project looks more like trying out my new ideas. I just want to know whether l can interpret typescript in java application. I don't spend too much time and pay no attention to performance now.
 
 If you want to execute javascript in java, i suggest you take a look at [oracle/graaljs!](https://github.com/oracle/graaljs). I use graaljs to get ast json from babel-parser in this project. If graaljs can support typescript, then this project will not be born.
 
 Currently, i only support a small subset of TypeScript  Syntax. And i place a lot of restrictions to simplify coding.
 
-The input code should be compiled and executed with TypeScript offical toolkit. This project  aims to execute code, it will not check whether the code comply with TypeScript grammar.
+The input code should be compiled and executed with TypeScript offcial toolkit. This project aims to execute code, it will not check whether the code comply with TypeScript grammar.
 
 # How to run the code
 Execute `com.tankilo.typescript.interpreter.Main`, it's a simple command line tool.
