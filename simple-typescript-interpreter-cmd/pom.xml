@@ -5,20 +5,28 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.tankilo</groupId>
-    <artifactId>simple-typescript-interpreter</artifactId>
-    <packaging>pom</packaging>
+    <artifactId>simple-typescript-interpreter-cmd</artifactId>
     <version>1.0-SNAPSHOT</version>
-    <modules>
-        <module>simple-typescript-interpreter-core</module>
-        <module>simple-typescript-interpreter-web</module>
-        <module>simple-typescript-interpreter-ast-generator</module>
-        <module>simple-typescript-interpreter-cmd</module>
-    </modules>
 
-    <name>simple-typescript-interpreter</name>
+    <name>simple-typescript-interpreter-cmd</name>
+
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>junit</groupId>
+            <artifactId>junit</artifactId>
+            <version>4.11</version>
+            <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.tankilo</groupId>
+            <artifactId>simple-typescript-interpreter-ast-generator</artifactId>
+            <version>${project.version}</version>
+        </dependency>
+    </dependencies>
 </project>
