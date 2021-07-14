@@ -18,3 +18,5 @@ test-output
 *classes
 target/
 /logs
+/simple-typescript-interpreter-web/src/main/javascript/build/
+/simple-typescript-interpreter-web/src/main/javascript/node/

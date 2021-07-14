@@ -317,7 +317,6 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                     if (property instanceof Identifier) {
                         Identifier methodName = (Identifier) property;
                         if (methodName.getName().equals("log")) {
-
                             valueList.forEach(s -> System.out.print(s + " "));
                             System.out.println();
                         }

@@ -8,7 +8,7 @@ import org.graalvm.polyglot.Value;
 import java.io.File;
 
 /**
- * @author Tankilo (tankilo@126.com)
+ * @author Tankilo E-mail: tankilo@126.com
  */
 public class GraaljsAstService implements AstService {
 

@@ -20,7 +20,7 @@ public class DSLService {
 
     private BabelAstVisitor babelAstVisitor = new BabelAstVisitorImpl();
 
-    public File readAst(String astJson) throws InterpreterException {
+    private File readAst(String astJson) throws InterpreterException {
         ObjectMapper objectMapper = new ObjectMapper();
         objectMapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
         File file = null;
@@ -32,8 +32,8 @@ public class DSLService {
         return file;
     }
 
-    public TypedValue eval(String ast, Context context) throws InterpreterException {
-        File file = readAst(ast);
+    public TypedValue eval(String astJson, Context context) throws InterpreterException {
+        File file = readAst(astJson);
         return eval(file.getProgram(), context);
     }
 
