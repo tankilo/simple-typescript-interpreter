@@ -13,7 +13,7 @@ Currently, i only support a small subset of TypeScript  Syntax. And i place a lo
 The input code should be compiled and executed with TypeScript offcial toolkit. This project aims to execute code, it will not check whether the code comply with TypeScript grammar.
 
 # How to run the code
-Execute `com.tankilo.typescript.interpreter.Main`, it's a simple command line tool.
+Execute `com.tankilo.typescript.interpreter.cmd.Main`, it's a simple command line tool.
 
 ![screen](assets/screen.gif)
 
