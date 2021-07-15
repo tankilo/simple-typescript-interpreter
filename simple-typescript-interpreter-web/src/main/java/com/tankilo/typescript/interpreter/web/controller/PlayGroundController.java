@@ -8,8 +8,10 @@ import com.tankilo.typescript.interpreter.core.service.DSLService;
 import com.tankilo.typescript.interpreter.core.traverse.TypedValue;
 import com.tankilo.typescript.interpreter.web.vo.InterpreteRequest;
 import com.tankilo.typescript.interpreter.web.vo.InterpreteResult;
+
 import java.io.ByteArrayOutputStream;
 import java.io.PrintStream;
+
 import org.apache.commons.lang3.exception.ExceptionUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.ObjectUtils;
@@ -48,17 +50,17 @@ public class PlayGroundController {
                 result.setReturnValue("undefined");
             }
             stopWatch.stop();
+            result.setSuccessful(true);
             result.setTimeCost(stopWatch.getTotalTimeMillis());
             appendConsoleOutput(result, buffer);
         } catch (SyntaxException | InterpreterException e) {
             stopWatch.stop();
             result.setSuccessful(false);
             result.setTimeCost(stopWatch.getTotalTimeMillis());
-            String stacktrace = ExceptionUtils.getStackTrace(e);
+            String stacktrace = e instanceof SyntaxException ? e.getMessage() : ExceptionUtils.getStackTrace(e);
             appendConsoleOutput(result, buffer);
             result.appendConsoleOutput(stacktrace);
         }
-        result.setSuccessful(true);
         return result;
     }
 
