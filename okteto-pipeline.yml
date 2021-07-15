@@ -1,5 +1,5 @@
 deploy:
-  - okteto build -t okteto/typescript-playground:java-maven:${OKTETO_GIT_COMMIT} simple-typescript-interpreter-web
+  - okteto build -t okteto/typescript-playground:java-maven:${OKTETO_GIT_COMMIT} simple-typescript-interpreter/simple-typescript-interpreter-web
   - kubectl apply -f k8s.yml
 devs:
   - okteto.yml
