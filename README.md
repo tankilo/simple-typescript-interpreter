@@ -15,7 +15,7 @@ The input code should be compiled and executed with TypeScript offcial toolkit. 
 # Live Demo
 Visit [https://typescript-playground-tankilo.cloud.okteto.net/](https://typescript-playground-tankilo.cloud.okteto.net/)
 
-![Screenshot](assets/img.png)
+![Screenshot](assets/screenshot1.png)
 
 # How to run the code
 
