@@ -1,11 +1,16 @@
 package com.tankilo.typescript.interpreter.ast.generator;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 import org.graalvm.polyglot.Context;
 import org.graalvm.polyglot.PolyglotException;
 import org.graalvm.polyglot.Source;
 import org.graalvm.polyglot.Value;
 
 import java.io.File;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.util.FileCopyUtils;
 
 /**
  * @author Tankilo E-mail: tankilo@126.com
@@ -28,9 +33,9 @@ public class GraaljsAstService implements AstService {
                         "    \"typescript\"\n" +
                         "  ],\n" +
                         "})");
-        File validatorBundleJS = new File(
-                getClass().getClassLoader().getResource("babelparser_bundled.js").getFile());
-        context.eval(Source.newBuilder("js", validatorBundleJS).build());
+        ClassPathResource resource = new ClassPathResource("babelparser_bundled.js");
+        BufferedReader reader = new BufferedReader(new InputStreamReader(resource.getInputStream()));
+        context.eval(Source.newBuilder("js", reader,"babelparser_bundled.js").build());
         parseFunc = context.getBindings("js").getMember("parse");
         jsonFunc = context.eval("js", "x => JSON.stringify(x)");
     }

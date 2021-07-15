@@ -61,5 +61,10 @@
             <artifactId>simple-typescript-interpreter-core</artifactId>
             <version>${project.version}</version>
         </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-core</artifactId>
+            <version>5.3.8</version>
+        </dependency>
     </dependencies>
 </project>
