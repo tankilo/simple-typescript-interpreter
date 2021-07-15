@@ -1,7 +1,7 @@
 FROM maven as build
 WORKDIR /code
 COPY .. /code/
-RUN mvn package
+RUN mvn package -DskipTests
 
 FROM openjdk:8-jre
 EXPOSE 8080
