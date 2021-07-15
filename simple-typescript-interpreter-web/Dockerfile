@@ -1,6 +1,6 @@
 FROM maven as build
 WORKDIR /code
-COPY . /code/
+COPY .. /code/
 RUN mvn package
 
 FROM openjdk:8-jre
