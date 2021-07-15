@@ -1,8 +1,6 @@
 # Overview
 A simple TypeScript interpreter written in Java base on Babel Parser's ast. Only support a subset of TypeScript Grammar.
 
-![img.png](assets/img.png)
-
 # Why i write it
 I need to execute TypeScript in Java and I didn't found any existing opensource TypeScript Interpreter to use.
 
@@ -14,8 +12,12 @@ Currently, i only support a small subset of TypeScript  Syntax. And i place a lo
 
 The input code should be compiled and executed with TypeScript offcial toolkit. This project aims to execute code, it will not check whether the code comply with TypeScript grammar.
 
-# How to run the code
+# Live Demo
+Visit [https://typescript-playground-tankilo.cloud.okteto.net/](https://typescript-playground-tankilo.cloud.okteto.net/)
 
+![Screenshot](assets/img.png)
+
+# How to run the code
 
 ## Command Line
 Execute `com.tankilo.typescript.interpreter.cmd.Main`, it's a simple command line tool.
