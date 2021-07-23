@@ -15,7 +15,7 @@ spec:
       terminationGracePeriodSeconds: 0
       containers:
       - name: api
-        image: okteto/typescript-playground:java-maven
+        image: okteto.dev/typescript-playground:java-maven
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
