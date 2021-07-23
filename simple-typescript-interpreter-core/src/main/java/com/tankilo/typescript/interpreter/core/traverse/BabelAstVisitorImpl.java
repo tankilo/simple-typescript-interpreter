@@ -678,6 +678,11 @@ public class BabelAstVisitorImpl implements BabelAstVisitor {
                         propertyName = ((Identifier) property).getName();
                     }
                     Object result = map.get(propertyName);
+                    if (null == result) {
+                        TypedValue tv = new TypedValue(null);
+                        map.put(propertyName, tv);
+                        return tv;
+                    }
                     if (result instanceof TypedValue) {
                         return (TypedValue) result;
                     }

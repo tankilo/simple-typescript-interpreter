@@ -49,7 +49,7 @@ public class DSLService {
         if (!body.isEmpty()) {
             Statement statement = body.get(0);
             if (statement instanceof ExpressionStatement) {
-                ExpressionStatement expressionStatement = (ExpressionStatement) statement;
+                ExpressionStatement expressionStatement = (ExpressionStatement)statement;
                 return eval(expressionStatement.getExpression(), context);
             } else {
                 return eval(file.getProgram(), context);

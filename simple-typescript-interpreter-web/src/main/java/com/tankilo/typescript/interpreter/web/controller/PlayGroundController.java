@@ -53,7 +53,7 @@ public class PlayGroundController {
             result.setSuccessful(true);
             result.setTimeCost(stopWatch.getTotalTimeMillis());
             appendConsoleOutput(result, buffer);
-        } catch (SyntaxException | InterpreterException e) {
+        } catch (Exception e) {
             stopWatch.stop();
             result.setSuccessful(false);
             result.setTimeCost(stopWatch.getTotalTimeMillis());
